@@ -181,94 +181,110 @@ function buildSearch(scene, M) {
 
 const BUILDERS = { design: buildDesign, development: buildDevelopment, search: buildSearch };
 
+/** Builds and runs one scene inside el. Returns its cleanup. */
+function mountScene(el, kind, isLive) {
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+  } catch {
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  el.appendChild(renderer.domElement);
+  renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environment = env;
+  scene.environmentIntensity = 0.55;
+
+  const sunLight = new THREE.DirectionalLight("#ffffff", 2.2);
+  sunLight.position.set(5, 12, 6);
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.set(1024, 1024);
+  Object.assign(sunLight.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
+  sunLight.shadow.bias = -0.0005;
+  sunLight.shadow.radius = 5;
+  scene.add(sunLight);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.12 }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.6;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  const M = materials();
+  const update = BUILDERS[kind](scene, M);
+
+  const camera = new THREE.OrthographicCamera();
+  camera.position.set(10, 9, 10);
+  camera.lookAt(0, 0.6, 0);
+  const resize = () => {
+    const w = el.clientWidth || 1;
+    const h = el.clientHeight || 1;
+    renderer.setSize(w, h, false);
+    const aspect = w / h;
+    const f = aspect < 1.25 ? (4.4 * 1.25) / aspect : 4.4;
+    Object.assign(camera, { left: -f * aspect, right: f * aspect, top: f, bottom: -f });
+    camera.updateProjectionMatrix();
+  };
+  resize();
+  const ro = new ResizeObserver(resize);
+  ro.observe(el);
+
+  const clock = new THREE.Timer();
+  let raf;
+  const loop = (now) => {
+    raf = requestAnimationFrame(loop);
+    clock.update(now);
+    if (!isLive()) return;
+    update(clock.getElapsed());
+    renderer.render(scene, camera);
+  };
+  raf = requestAnimationFrame(loop);
+
+  return () => {
+    cancelAnimationFrame(raf);
+    ro.disconnect();
+    scene.traverse((obj) => {
+      obj.geometry?.dispose();
+    });
+    Object.values(M).forEach((m) => m.dispose());
+    env.dispose();
+    pmrem.dispose();
+    renderer.dispose();
+    renderer.forceContextLoss();
+    renderer.domElement.remove();
+  };
+}
+
 export default function ServiceArt({ kind, paused = false }) {
   const host = useRef(null);
   const pausedRef = useRef(paused);
-  pausedRef.current = paused;
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     const el = host.current;
-    let renderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
-    } catch {
-      return;
-    }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
-    renderer.toneMapping = THREE.NeutralToneMapping;
-    el.appendChild(renderer.domElement);
-    renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
-
-    const scene = new THREE.Scene();
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    scene.environment = env;
-    scene.environmentIntensity = 0.55;
-
-    const sunLight = new THREE.DirectionalLight("#ffffff", 2.2);
-    sunLight.position.set(5, 12, 6);
-    sunLight.castShadow = true;
-    sunLight.shadow.mapSize.set(1024, 1024);
-    Object.assign(sunLight.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
-    sunLight.shadow.bias = -0.0005;
-    sunLight.shadow.radius = 5;
-    scene.add(sunLight);
-
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.12 }));
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.6;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    const M = materials();
-    const update = BUILDERS[kind](scene, M);
-
-    const camera = new THREE.OrthographicCamera();
-    camera.position.set(10, 9, 10);
-    camera.lookAt(0, 0.6, 0);
-    const resize = () => {
-      const w = el.clientWidth || 1;
-      const h = el.clientHeight || 1;
-      renderer.setSize(w, h, false);
-      const aspect = w / h;
-      const f = aspect < 1.25 ? (4.4 * 1.25) / aspect : 4.4;
-      Object.assign(camera, { left: -f * aspect, right: f * aspect, top: f, bottom: -f });
-      camera.updateProjectionMatrix();
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(el);
-
     let visible = false;
-    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
+    let stop = null;
+    // Building a scene is expensive, so wait until it is about to scroll into view.
+    const io = new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (visible && !stop) stop = mountScene(el, kind, () => visible && !pausedRef.current) || (() => {});
+      },
+      { rootMargin: "300px" }
+    );
     io.observe(el);
-
-    const clock = new THREE.Timer();
-    let raf;
-    const loop = (now) => {
-      raf = requestAnimationFrame(loop);
-      clock.update(now);
-      if (!visible || pausedRef.current) return;
-      update(clock.getElapsed());
-      renderer.render(scene, camera);
-    };
-    raf = requestAnimationFrame(loop);
-
     return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
       io.disconnect();
-      scene.traverse((obj) => {
-        obj.geometry?.dispose();
-      });
-      Object.values(M).forEach((m) => m.dispose());
-      env.dispose();
-      pmrem.dispose();
-      renderer.dispose();
-      renderer.forceContextLoss();
-      renderer.domElement.remove();
+      stop?.();
     };
   }, [kind]);
 

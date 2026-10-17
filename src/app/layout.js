@@ -10,11 +10,12 @@ const sans = Schibsted_Grotesk({
   display: "swap",
 });
 
+// Only ever used as the italic 500 accent (.serif), so load just that one face.
 const serif = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
-  style: ["italic", "normal"],
-  axes: ["opsz"],
+  style: "italic",
+  weight: "500",
   display: "swap",
 });
 
@@ -72,8 +73,8 @@ export const metadata = {
   },
   verification: { google: "_XiToG1usLWtgAx8lTgOiZclAnZxWPwfeYOjk_yLsNM" },
   icons: {
-    icon: "https://res.cloudinary.com/dfpxvbkwt/image/upload/v1782369682/dsnxticon_rxjq5i.png",
-    apple: "https://res.cloudinary.com/dfpxvbkwt/image/upload/v1782369682/dsnxticon_rxjq5i.png",
+    icon: "https://res.cloudinary.com/dfpxvbkwt/image/upload/w_192,q_auto/v1782369682/dsnxticon_rxjq5i.png",
+    apple: "https://res.cloudinary.com/dfpxvbkwt/image/upload/w_192,q_auto/v1782369682/dsnxticon_rxjq5i.png",
   },
   other: {
     "geo.region": "IN-MH",

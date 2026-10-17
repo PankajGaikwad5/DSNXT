@@ -1,6 +1,6 @@
 import { Lines } from "@/components/Motion";
 import PreviewForm from "@/components/PreviewForm";
-import InkField from "@/components/InkField";
+import InkField from "@/components/LazyInkField";
 import { SITE } from "@/data/site";
 import { pageMeta } from "@/lib/seo";
 

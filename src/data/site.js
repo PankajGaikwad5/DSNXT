@@ -30,7 +30,7 @@ export const unsplash = (id, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 export const LOGO = {
-  white: "https://res.cloudinary.com/dfpxvbkwt/image/upload/e_trim/v1782367963/dsnxtlogo_dnb8kd.png",
-  black: "https://res.cloudinary.com/dfpxvbkwt/image/upload/e_trim/v1782368295/dsnxtlogoo_dnyqib.png",
+  white: "https://res.cloudinary.com/dfpxvbkwt/image/upload/e_trim/w_480,f_auto,q_auto/v1782367963/dsnxtlogo_dnb8kd.png",
+  black: "https://res.cloudinary.com/dfpxvbkwt/image/upload/e_trim/w_480,f_auto,q_auto/v1782368295/dsnxtlogoo_dnyqib.png",
   ratio: 678 / 126,
 };

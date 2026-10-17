@@ -1,10 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import Arrow from "./Arrow";
-
-const InkField = dynamic(() => import("./InkField"), { ssr: false });
+import InkField from "./LazyInkField";
 
 const d = (s) => ({ animationDelay: `${s}s` });
 
@@ -25,10 +23,10 @@ export default function Hero() {
 
         <h1 className="t-mega max-w-[17ch]">
           <span className="block overflow-hidden pb-[0.06em]">
-            <span className="rise" style={d(0.3)}>Websites that make</span>
+            <span className="rise">Websites that make</span>
           </span>
           <span className="block overflow-hidden pb-[0.1em]">
-            <span className="rise" style={d(0.42)}>
+            <span className="rise" style={d(0.08)}>
               you the <span className="serif text-signal">obvious</span> choice.
             </span>
           </span>

@@ -1,4 +1,4 @@
-import InkField from "./InkField";
+import InkField from "./LazyInkField";
 
 /** Paper page header with live ink drifting on the right. */
 export default function InkHeader({ children, className = "pb-20 pt-40 md:pb-28 md:pt-52" }) {

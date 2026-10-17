@@ -141,9 +141,10 @@ html.lenis body {
   background-position: 0% 100%;
 }
 
-/* Hero intro */
+/* Hero intro. Starts partly visible so the headline counts as painted on the
+   first frame (it is the page's LCP); fully hidden would delay LCP by seconds. */
 @keyframes rise {
-  from { transform: translateY(110%); }
+  from { transform: translateY(40%); }
   to { transform: translateY(0); }
 }
 @keyframes fade {
@@ -152,8 +153,7 @@ html.lenis body {
 }
 .rise {
   display: inline-block;
-  transform: translateY(110%);
-  animation: rise 1.3s var(--ease-out-expo) forwards;
+  animation: rise 1.3s var(--ease-out-expo) both;
 }
 .fade-in {
   opacity: 0;

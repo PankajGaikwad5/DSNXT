@@ -86,17 +86,22 @@ void main(){
 uniform sampler2D uTexture; uniform float value;
 void main(){ gl_FragColor = value * texture2D(uTexture, vUv); }`,
   display: `${head}
-uniform sampler2D uDye; uniform vec3 paper; uniform vec3 ink; uniform vec3 deep; uniform float uTime;
+uniform sampler2D uDye; uniform vec3 paper; uniform vec3 ink; uniform vec3 wash; uniform vec3 accent; uniform vec3 accentWash; uniform float uTime;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+float amt(vec2 uv){ vec2 s = texture2D(uDye, uv).rg; return s.x + s.y; }
 void main(){
-  float d  = texture2D(uDye, vUv).r;
-  float dl = texture2D(uDye, vL).r; float dr = texture2D(uDye, vR).r;
-  float dt = texture2D(uDye, vT).r; float db = texture2D(uDye, vB).r;
-  vec3 n = normalize(vec3(dr - dl, dt - db, .06));
-  float light = clamp(dot(n, normalize(vec3(-.4, .6, 1.))), 0., 1.);
-  float a = 1. - exp(-d * 1.35);
-  vec3 c = mix(ink, deep, smoothstep(.45, 1., a));
-  c *= .82 + .3 * light;
+  // Two pigments: r is the main ink, g the accent ink.
+  vec2 s = texture2D(uDye, vUv).rg;
+  float d = s.x + s.y;
+  float dl = amt(vL); float dr = amt(vR); float dt = amt(vT); float db = amt(vB);
+  // Sharpened so where pigments meet they marble instead of mixing to mud.
+  float t = smoothstep(.35, .65, s.y / (d + .0001));
+  // Matte pigment, not wet liquid: thin areas go to a lighter wash, dense areas
+  // stay flat, and only edges darken slightly, like watercolour.
+  float a = (1. - exp(-d * 1.1)) * .9;
+  vec3 c = mix(mix(wash, accentWash, t), mix(ink, accent, t), smoothstep(.05, .7, a));
+  float edge = clamp(length(vec2(dr - dl, dt - db)) * 6., 0., 1.);
+  c *= 1. - .12 * edge;
   vec3 col = mix(paper, c, a);
   col += (hash(vUv * 900. + uTime) - .5) * .025;
   gl_FragColor = vec4(col, 1.);
@@ -133,16 +138,25 @@ function doubleTarget(w, h) {
   };
 }
 
+// sumi: indigo-black ink with occasional red drops, like marbled paper. signal: all red.
+// The original glossy red/maroon version lives in InkFieldClassic.
+const PALETTES = {
+  sumi: { ink: "#1d2333", wash: "#6b7387", accent: "#e4200f", accentWash: "#f0603a", accentChance: 0.3 },
+  signal: { ink: "#e4200f", wash: "#f0603a", accent: "#e4200f", accentWash: "#f0603a", accentChance: 0 },
+};
+
 /**
  * @param intensity "hero" drops often and big; "calm" is gentler for page headers.
  * @param zone where self-falling drops land, in uv space [xMin, xMax, yMin, yMax].
+ * @param palette key of PALETTES; a `?ink=` query param overrides it for comparing.
  */
-export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45, 0.95], className = "" }) {
+export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45, 0.95], palette = "sumi", className = "" }) {
   const host = useRef(null);
   const zoneKey = zone.join(",");
 
   useEffect(() => {
     const el = host.current;
+    const colors = PALETTES[new URLSearchParams(window.location.search).get("ink")] || PALETTES[palette] || PALETTES.sumi;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const small = window.innerWidth < 768;
 
@@ -176,7 +190,7 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
       advect: mat(FRAG.advect, { uVelocity: { value: null }, uSource: { value: null }, velTexel: { value: new THREE.Vector2() }, dt: { value: 0 }, dissipation: { value: 0 } }),
       divergence: mat(FRAG.divergence, { uVelocity: { value: null } }),
       curl: mat(FRAG.curl, { uVelocity: { value: null } }),
-      vorticity: mat(FRAG.vorticity, { uVelocity: { value: null }, uCurl: { value: null }, curl: { value: 22 }, dt: { value: 0 } }),
+      vorticity: mat(FRAG.vorticity, { uVelocity: { value: null }, uCurl: { value: null }, curl: { value: 30 }, dt: { value: 0 } }),
       pressure: mat(FRAG.pressure, { uPressure: { value: null }, uDivergence: { value: null } }),
       gradient: mat(FRAG.gradient, { uPressure: { value: null }, uVelocity: { value: null } }),
       clear: mat(FRAG.clear, { uTexture: { value: null }, value: { value: 0.8 } }),
@@ -184,8 +198,10 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
         uDye: { value: null },
         uTime: { value: 0 },
         paper: { value: rgb("#f3f0ea") },
-        ink: { value: rgb("#e4200f") },
-        deep: { value: rgb("#5c0904") },
+        ink: { value: rgb(colors.ink) },
+        wash: { value: rgb(colors.wash) },
+        accent: { value: rgb(colors.accent) },
+        accentWash: { value: rgb(colors.accentWash) },
       }),
     };
 
@@ -214,7 +230,7 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
       renderer.render(scene, camera);
     };
 
-    const splat = (x, y, dx, dy, amount, radius) => {
+    const splat = (x, y, dx, dy, amount, radius, accent = false) => {
       const aspect = width / height;
       const r = (radius / 100) * (aspect > 1 ? aspect : 1);
       const s = M.splat.uniforms;
@@ -228,7 +244,7 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
       velocity.swap();
 
       s.uTarget.value = dye.read.texture;
-      s.color.value.set(amount, 0, 0);
+      s.color.value.set(accent ? 0 : amount, accent ? amount : 0, 0);
       blit(M.splat, dye.write, dye.texel);
       dye.swap();
     };
@@ -238,9 +254,10 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
       const [x0, x1, y0, y1] = zoneKey.split(",").map(Number);
       const x = x0 + Math.random() * (x1 - x0);
       const y = y0 + Math.random() * (y1 - y0);
-      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+      // Any direction, so drops bloom outward instead of reading as drips
+      const angle = Math.random() * Math.PI * 2;
       const force = (hero ? 900 : 550) * (big ? 1.4 : 1);
-      splat(x, y, Math.cos(angle) * force, Math.sin(angle) * force, big ? 2.2 : 1.3, big ? 0.9 : 0.5);
+      splat(x, y, Math.cos(angle) * force, Math.sin(angle) * force, big ? 1.5 : 0.9, big ? 0.6 : 0.35, Math.random() < colors.accentChance);
     };
 
     const step = (dt) => {
@@ -367,7 +384,7 @@ export default function InkField({ intensity = "hero", zone = [0.45, 0.95, 0.45,
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [intensity, zoneKey]);
+  }, [intensity, zoneKey, palette]);
 
   return <div ref={host} className={`absolute inset-0 overflow-hidden bg-paper ${className}`} aria-hidden="true" />;
 }

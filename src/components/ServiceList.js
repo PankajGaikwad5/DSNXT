@@ -2,9 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Video from "./Video";
-import ServiceArt from "./ServiceArt";
+
+// three.js is heavy; load it only when a scene is actually shown.
+const ServiceArt = dynamic(() => import("./ServiceArt"), { ssr: false });
+
+/** Renders children only once the box is about to scroll into view. */
+function WhenNear({ children }) {
+  const ref = useRef(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: "300px" });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  return near ? children : <div ref={ref} className="absolute inset-0 bg-paper" />;
+}
 
 /**
  * Large rows; on desktop a media preview floats beside the cursor for the
@@ -13,6 +28,8 @@ import ServiceArt from "./ServiceArt";
 export default function ServiceList({ items, tone = "dark" }) {
   const line = tone === "light" ? "border-ink/15" : "border-white/10";
   const [active, setActive] = useState(null);
+  // Hover previews mount on first hover, so hidden scenes never build up front.
+  const [seen, setSeen] = useState(() => new Set());
   const box = useRef(null);
   const pos = useRef({ x: 0, y: 0, cx: 0, cy: 0 });
 
@@ -40,7 +57,10 @@ export default function ServiceList({ items, tone = "dark" }) {
         {items.map((s, i) => (
           <li
             key={s.title}
-            onPointerEnter={() => setActive(i)}
+            onPointerEnter={() => {
+              setActive(i);
+              setSeen((prev) => (prev.has(i) ? prev : new Set(prev).add(i)));
+            }}
             className={`group grid cursor-default gap-4 border-b ${line} py-8 transition-colors md:grid-cols-12 md:items-baseline md:py-12`}
           >
             <span className="t-label text-signal md:col-span-1">0{i + 1}</span>
@@ -57,7 +77,9 @@ export default function ServiceList({ items, tone = "dark" }) {
             </div>
             <div className="relative mt-2 aspect-[16/10] overflow-hidden rounded-[4px] md:pointer-fine:hidden">
               {s.art ? (
-                <ServiceArt kind={s.art} />
+                <WhenNear>
+                  <ServiceArt kind={s.art} />
+                </WhenNear>
               ) : s.video ? (
                 <Video src={s.video} poster={s.poster} />
               ) : (
@@ -77,7 +99,7 @@ export default function ServiceList({ items, tone = "dark" }) {
         >
           {items.map((it, i) => (
             <div key={it.title} className={`absolute inset-0 transition-opacity duration-500 ${active === i ? "opacity-100" : "opacity-0"}`}>
-              {it.art ? (
+              {!seen.has(i) ? null : it.art ? (
                 <ServiceArt kind={it.art} paused={active !== i} />
               ) : it.video ? (
                 <Video src={it.video} poster={it.poster} />
