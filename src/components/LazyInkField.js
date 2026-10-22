@@ -20,7 +20,8 @@ export default function LazyInkField(props) {
     const go = () => setReady(true);
     const arm = () => {
       EVENTS.forEach((e) => window.addEventListener(e, go, { once: true, passive: true }));
-      timer = setTimeout(go, 3500);
+      // Phones wait for a touch or scroll: no WebGL cost for visitors who just read.
+      if (window.matchMedia("(pointer: fine)").matches) timer = setTimeout(go, 3500);
     };
     if (document.readyState === "complete") arm();
     else window.addEventListener("load", arm, { once: true });

@@ -76,16 +76,6 @@ export default function Footer() {
                     Instagram
                   </a>
                 </li>
-                <li>
-                  <Link href="/alt-noir" className="u-link text-mute hover:text-paper">
-                    Concept: Noir
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/alt-editorial" className="u-link text-mute hover:text-paper">
-                    Concept: Editorial
-                  </Link>
-                </li>
               </ul>
             </div>
             <div>

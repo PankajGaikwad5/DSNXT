@@ -3,11 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
 import { NAV, SITE } from "@/data/site";
 import Logo from "./Logo";
-
-const EASE = [0.16, 1, 0.3, 1];
 
 export default function Nav() {
   const pathname = usePathname();
@@ -80,36 +77,33 @@ export default function Nav() {
         </div>
       </header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-between bg-ink px-5 pb-10 pt-28 md:hidden"
-            initial={{ clipPath: "inset(0 0 100% 0)" }}
-            animate={{ clipPath: "inset(0 0 0% 0)" }}
-            exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.8, ease: EASE }}
-          >
-            <nav className="flex flex-col">
-              {[{ label: "Home", href: "/" }, ...NAV, { label: "Start a project", href: "/preview" }].map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, ease: EASE, delay: 0.15 + i * 0.06 }}
-                >
-                  <Link href={item.href} className="block border-b border-white/10 py-4 text-5xl font-medium tracking-[-0.05em]">
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
-            <div className="flex justify-between text-sm text-mute">
-              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-              <span>Mumbai</span>
+      <div
+        className={`fixed inset-0 z-40 flex flex-col justify-between bg-ink px-5 pb-10 pt-28 transition-[clip-path,visibility] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          open ? "visible [clip-path:inset(0_0_0%_0)]" : "invisible [clip-path:inset(0_0_100%_0)]"
+        }`}
+        inert={!open}
+      >
+        <nav className="flex flex-col">
+          {[{ label: "Home", href: "/" }, ...NAV, { label: "Start a project", href: "/preview" }].map((item, i) => (
+            <div
+              key={item.href}
+              // Items rise in after the panel opens; on close they wait for the panel to finish.
+              className={`transition-[opacity,transform] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                open ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+              }`}
+              style={{ transitionDuration: open ? "0.8s" : "0s", transitionDelay: open ? `${0.15 + i * 0.06}s` : "0.8s" }}
+            >
+              <Link href={item.href} className="block border-b border-white/10 py-4 text-5xl font-medium tracking-[-0.05em]">
+                {item.label}
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+        </nav>
+        <div className="flex justify-between text-sm text-mute">
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <span>Mumbai</span>
+        </div>
+      </div>
     </>
   );
 }

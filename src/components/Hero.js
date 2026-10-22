@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Arrow from "./Arrow";
 import InkField from "./LazyInkField";

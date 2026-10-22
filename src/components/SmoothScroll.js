@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Lenis from "lenis";
-import Snap from "lenis/snap";
 
 let lenis = null;
 let snap = null;
@@ -15,11 +13,15 @@ export function scrollToTop() {
   else window.scrollTo(0, 0);
 }
 
-/** Registers every [data-snap] element on the page as a soft snap point. */
+let removeSnaps = () => {};
+
+/** Registers every [data-snap] element on the page as a soft snap point, replacing the last set. */
 function registerSnaps() {
-  if (!snap) return () => {};
+  removeSnaps();
+  removeSnaps = () => {};
+  if (!snap) return;
   const els = Array.from(document.querySelectorAll("[data-snap]"));
-  return snap.addElements(els, { align: "start" });
+  removeSnaps = snap.addElements(els, { align: "start" });
 }
 
 export default function SmoothScroll({ children }) {
@@ -29,32 +31,40 @@ export default function SmoothScroll({ children }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    lenis = new Lenis({
-      lerp: 0.075,
-      wheelMultiplier: 0.85,
-      smoothWheel: true,
-    });
-
-    // Proximity: only settles when you stop close to a section start, never mid-flow.
-    snap = new Snap(lenis, {
-      type: "proximity",
-      distanceThreshold: "22%",
-      debounce: 380,
-      duration: 1.15,
-      easing: easeOutQuint,
-    });
-
+    // Imported here so phones, which never use it, don't download it.
     let id;
-    const raf = (t) => {
-      lenis.raf(t);
+    let cancelled = false;
+    Promise.all([import("lenis"), import("lenis/snap")]).then(([{ default: Lenis }, { default: Snap }]) => {
+      if (cancelled) return;
+      lenis = new Lenis({
+        lerp: 0.075,
+        wheelMultiplier: 0.85,
+        smoothWheel: true,
+      });
+
+      // Proximity: only settles when you stop close to a section start, never mid-flow.
+      snap = new Snap(lenis, {
+        type: "proximity",
+        distanceThreshold: "22%",
+        debounce: 380,
+        duration: 1.15,
+        easing: easeOutQuint,
+      });
+      registerSnaps();
+
+      const raf = (t) => {
+        lenis.raf(t);
+        id = requestAnimationFrame(raf);
+      };
       id = requestAnimationFrame(raf);
-    };
-    id = requestAnimationFrame(raf);
+    });
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(id);
-      snap.destroy();
-      lenis.destroy();
+      removeSnaps = () => {};
+      snap?.destroy();
+      lenis?.destroy();
       snap = null;
       lenis = null;
     };
@@ -63,11 +73,11 @@ export default function SmoothScroll({ children }) {
   useEffect(() => {
     scrollToTop();
     // wait for the new page to lay out before collecting its snap points
-    let remove = () => {};
-    const t = setTimeout(() => (remove = registerSnaps()), 400);
+    const t = setTimeout(registerSnaps, 400);
     return () => {
       clearTimeout(t);
-      remove();
+      removeSnaps();
+      removeSnaps = () => {};
     };
   }, [pathname]);
 

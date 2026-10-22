@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Arrow from "./Arrow";
 import { SITE } from "@/data/site";
 
@@ -21,11 +20,10 @@ export default function PreviewForm() {
   const whatsapp = `https://wa.me/?text=${encodeURIComponent(body)}`;
 
   return (
-    <AnimatePresence mode="wait">
+    <>
       {!sent ? (
-        <motion.form
+        <form
           key="form"
-          exit={{ opacity: 0, y: -20 }}
           onSubmit={(e) => {
             e.preventDefault();
             setSent(true);
@@ -54,9 +52,9 @@ export default function PreviewForm() {
             Request my preview <Arrow className="h-5 w-5" />
           </button>
           <p className="pt-3 text-sm text-ink/50">No payment, no obligation. We reply within one working day.</p>
-        </motion.form>
+        </form>
       ) : (
-        <motion.div key="done" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="py-6">
+        <div key="done" className="enter-up py-6">
           <p className="t-h2">
             Almost there, <span className="serif text-signal">{data.name?.split(" ")[0]}.</span>
           </p>
@@ -77,8 +75,8 @@ export default function PreviewForm() {
           <button onClick={() => setSent(false)} className="u-link mt-10 text-sm text-ink/50">
             Edit details
           </button>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }

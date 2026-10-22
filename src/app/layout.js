@@ -1,5 +1,5 @@
 import { Schibsted_Grotesk, Newsreader, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import { SITE } from "@/data/site";
@@ -20,10 +20,12 @@ const serif = Newsreader({
   display: "swap",
 });
 
+// Small labels only; not preloaded so it doesn't compete with the hero's fonts.
 const mono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
 const TITLE = "Design Next | Web Design & Development Studio in Mumbai";
@@ -95,8 +97,8 @@ export default function RootLayout({ children }) {
       <body>
         <JsonLd data={studioGraph()} />
         <SmoothScroll>{children}</SmoothScroll>
+        <Analytics gaId="G-EEV7YN45PX" />
       </body>
-      <GoogleAnalytics gaId="G-EEV7YN45PX" />
     </html>
   );
 }

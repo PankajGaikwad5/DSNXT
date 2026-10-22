@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
 import Video from "./Video";
 
 // three.js is heavy; load it only when a scene is actually shown.
@@ -91,11 +90,10 @@ export default function ServiceList({ items, tone = "dark" }) {
       </ul>
 
       <div ref={box} className="pointer-events-none fixed left-0 top-0 z-30 hidden md:pointer-fine:block" aria-hidden="true">
-        <motion.div
-          className="absolute h-[17rem] w-[25rem] overflow-hidden rounded-[10px] bg-paper shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]"
-          initial={false}
-          animate={active === null ? { opacity: 0, scale: 0.85, rotate: -4 } : { opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        <div
+          className={`absolute h-[17rem] w-[25rem] overflow-hidden rounded-[10px] bg-paper shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            active === null ? "-rotate-4 scale-[0.85] opacity-0" : "rotate-0 scale-100 opacity-100"
+          }`}
         >
           {items.map((it, i) => (
             <div key={it.title} className={`absolute inset-0 transition-opacity duration-500 ${active === i ? "opacity-100" : "opacity-0"}`}>
@@ -108,7 +106,7 @@ export default function ServiceList({ items, tone = "dark" }) {
               )}
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

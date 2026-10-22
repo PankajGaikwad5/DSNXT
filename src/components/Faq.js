@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function Faq({ items, tone = "dark" }) {
   const [open, setOpen] = useState(0);
@@ -29,19 +28,16 @@ export default function Faq({ items, tone = "dark" }) {
                 />
               </span>
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
-                  <p className={`max-w-2xl pb-8 text-[1.05rem] leading-relaxed ${muted}`}>{item.a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div
+              className={`grid transition-[grid-template-rows,opacity] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+              inert={!isOpen}
+            >
+              <div className="overflow-hidden">
+                <p className={`max-w-2xl pb-8 text-[1.05rem] leading-relaxed ${muted}`}>{item.a}</p>
+              </div>
+            </div>
           </li>
         );
       })}
