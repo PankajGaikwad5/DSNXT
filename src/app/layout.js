@@ -1,4 +1,5 @@
 import { Schibsted_Grotesk, Newsreader, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import { SITE } from "@/data/site";
@@ -95,6 +96,7 @@ export default function RootLayout({ children }) {
         <JsonLd data={studioGraph()} />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
+      <GoogleAnalytics gaId="G-EEV7YN45PX" />
     </html>
   );
 }
