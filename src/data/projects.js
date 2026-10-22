@@ -14,6 +14,20 @@ export const PROJECTS = [
     services: ["Art direction", "Design", "Development", "SEO"],
   },
   {
+    slug: "cuddles-by-mia-co",
+    title: "Cuddles by Mia & Co.",
+    short: "Cuddles",
+    category: "Baby & kids ecommerce",
+    year: "2026",
+    location: "India",
+    liveUrl: "https://cuddlesbymiaco.com/",
+    image: "/work/cuddles.webp",
+    summary: "A soft, story-led Shopify store for heirloom baby essentials, built from scratch.",
+    story:
+      "No off-the-shelf theme. We hand-built a custom Shopify storefront that feels as gentle as the swaddles it sells: curated collections by moment, from first cuddles to bath time, Mia's Picks and gift sets that make the parent-to-be easy to shop for.",
+    services: ["Design", "Custom Shopify theme", "Ecommerce"],
+  },
+  {
     slug: "pkd-studio",
     title: "PKD Studio",
     short: "PKD Studio",
