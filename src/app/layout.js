@@ -75,10 +75,6 @@ export const metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   verification: { google: "_XiToG1usLWtgAx8lTgOiZclAnZxWPwfeYOjk_yLsNM" },
-  icons: {
-    icon: "https://res.cloudinary.com/dfpxvbkwt/image/upload/w_192,q_auto/v1782369682/dsnxticon_rxjq5i.png",
-    apple: "https://res.cloudinary.com/dfpxvbkwt/image/upload/w_192,q_auto/v1782369682/dsnxticon_rxjq5i.png",
-  },
   other: {
     "geo.region": "IN-MH",
     "geo.placename": "Mumbai",
