@@ -1,11 +1,16 @@
-import Image from "next/image";
 import InkHeader from "@/components/InkHeader";
 import CtaBand from "@/components/CtaBand";
 import Arrow from "@/components/Arrow";
 import { Lines, Reveal, ScrollWords } from "@/components/Motion";
 import { getProject } from "@/data/projects";
-import { unsplash } from "@/data/site";
 import { JsonLd, breadcrumbs, pageMeta } from "@/lib/seo";
+
+const FACTS = [
+  ["Experience", "4+ years"],
+  ["Role", "Designer & developer"],
+  ["Based in", "Mumbai, India"],
+  ["Works", "Remotely, worldwide"],
+];
 
 export const metadata = pageMeta({
   title: "Pankaj Gaikwad, Freelance Web Designer & Developer in Mumbai",
@@ -51,12 +56,21 @@ export default function FounderPage() {
 
       <section data-snap className="bg-ink py-32 md:py-44">
         <div className="wrap grid gap-14 md:grid-cols-12 md:items-center">
-          <Reveal className="md:col-span-5">
-            {/* Replace with a portrait of Pankaj */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[10px] bg-ink-2">
-              <Image src={unsplash("1550439062-609e1531270e", 1200)} alt="The Design Next workspace" fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
-            </div>
-          </Reveal>
+          <div className="rounded-[10px] border border-white/10 bg-ink-2 p-8 md:col-span-5 md:p-10">
+            <p className="text-[clamp(5rem,12vw,9rem)] font-medium leading-none tracking-[-0.06em] text-paper">
+              P<span className="serif text-signal">G</span>
+            </p>
+            <p className="mt-6 text-xl tracking-[-0.02em] text-paper">Pankaj Gaikwad</p>
+            <p className="text-mute">Founder, designer & developer</p>
+            <dl className="mt-10 border-t border-white/10 text-[0.95rem]">
+              {FACTS.map(([k, v]) => (
+                <div key={k} className="flex justify-between gap-6 border-b border-white/10 py-4">
+                  <dt className="t-label pt-1 text-dim">{k}</dt>
+                  <dd className="text-right text-paper">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
           <div className="md:col-span-6 md:col-start-7">
             <ScrollWords
               className="t-h3"
@@ -76,16 +90,16 @@ export default function FounderPage() {
         </div>
       </section>
 
-      <section data-snap className="bg-paper py-32 text-ink md:py-44">
+      <section data-snap className="bg-paper py-24 text-ink md:py-32">
         <div className="wrap">
           <p className="t-label mb-12 text-ink/50">Why one person works in your favour</p>
-          <div className="grid gap-px overflow-hidden rounded-[10px] bg-ink/10 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             {WHY.map(([title, text], i) => (
-              <Reveal key={title} delay={(i % 2) * 0.08} className="bg-paper p-8 md:p-12">
+              <div key={title} className="rounded-[10px] border border-ink/15 p-8 md:p-12">
                 <span className="t-label text-signal">0{i + 1}</span>
-                <h2 className="t-h3 mt-10 md:mt-16">{title}</h2>
+                <h2 className="t-h3 mt-6 md:mt-10">{title}</h2>
                 <p className="mt-4 max-w-sm text-ink/65">{text}</p>
-              </Reveal>
+              </div>
             ))}
           </div>
         </div>

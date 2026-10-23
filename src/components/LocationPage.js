@@ -8,7 +8,7 @@ import { Lines, Reveal } from "./Motion";
 import { PROJECTS } from "@/data/projects";
 import { JsonLd, breadcrumbs, faqPage, serviceSchema } from "@/lib/seo";
 
-/** Shared layout for the Mumbai and worldwide landing pages. */
+/** Shared layout for the location and service landing pages. */
 export default function LocationPage({ path, crumb, label, title, lead, service, reasons, sectorsTitle, sectors, projectSlugs, areasTitle, areas, faqs }) {
   const projects = projectSlugs.map((s) => PROJECTS.find((p) => p.slug === s)).filter(Boolean);
   return (
@@ -17,7 +17,7 @@ export default function LocationPage({ path, crumb, label, title, lead, service,
       <JsonLd data={faqPage(faqs)} />
       <JsonLd data={breadcrumbs([{ name: crumb, path }])} />
 
-      <InkHeader>
+      <InkHeader className="pb-14 pt-36 md:pb-20 md:pt-48">
         <p className="t-label mb-8 text-ink/60">{label}</p>
         <Lines as="h1" className="t-mega max-w-[13ch]" lines={title} />
         <Reveal delay={0.3} className="mt-12 max-w-xl">
@@ -26,20 +26,20 @@ export default function LocationPage({ path, crumb, label, title, lead, service,
       </InkHeader>
 
       {/* Why */}
-      <section className="wrap pb-24 md:pb-32">
-        <div className="grid gap-px overflow-hidden rounded-[10px] bg-ink/10 md:grid-cols-3">
+      <section className="wrap pb-16 md:pb-24">
+        <div className="grid gap-4 md:grid-cols-3">
           {reasons.map(([h, t], i) => (
-            <Reveal key={h} delay={i * 0.06} className="bg-paper p-8 md:p-10">
+            <div key={h} className="rounded-[10px] border border-ink/15 p-8 md:p-10">
               <span className="t-label text-signal">0{i + 1}</span>
-              <h2 className="t-h3 mt-10">{h}</h2>
+              <h2 className="t-h3 mt-6 md:mt-10">{h}</h2>
               <p className="mt-4 text-ink/65">{t}</p>
-            </Reveal>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Who for */}
-      <section className="wrap grid gap-10 pb-24 md:grid-cols-12 md:pb-32">
+      <section className="wrap grid gap-10 pb-16 md:grid-cols-12 md:pb-24">
         <h2 className="t-h2 md:col-span-5">{sectorsTitle}</h2>
         <ul className="border-t border-ink/15 md:col-span-7">
           {sectors.map((s) => (
@@ -52,7 +52,7 @@ export default function LocationPage({ path, crumb, label, title, lead, service,
       </section>
 
       {/* Work */}
-      <section className="bg-ink py-24 text-paper md:py-32">
+      <section className="bg-ink py-16 text-paper md:py-24">
         <div className="wrap">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
             <h2 className="t-h2">Recent work</h2>
@@ -84,7 +84,7 @@ export default function LocationPage({ path, crumb, label, title, lead, service,
       </section>
 
       {/* Areas */}
-      <section className="wrap py-24 md:py-32">
+      <section className="wrap py-16 md:py-24">
         <h2 className="t-label mb-8 text-ink/50">{areasTitle}</h2>
         <ul className="flex flex-wrap gap-2">
           {areas.map((a) => (
@@ -96,7 +96,7 @@ export default function LocationPage({ path, crumb, label, title, lead, service,
       </section>
 
       {/* FAQ */}
-      <section className="wrap grid gap-10 pb-32 md:grid-cols-12 md:pb-44">
+      <section className="wrap grid gap-10 pb-20 md:grid-cols-12 md:pb-32">
         <h2 className="t-h3 md:col-span-4">Questions</h2>
         <div className="md:col-span-8">
           <Faq items={faqs} tone="light" />

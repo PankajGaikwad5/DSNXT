@@ -3,6 +3,9 @@ export const SITE = {
   short: "DSNXT",
   url: "https://www.designnext.co",
   email: "studio.designnext@gmail.com",
+  phone: "+91 92219 68131",
+  tel: "+919221968131",
+  whatsapp: "https://wa.me/919221968131",
   instagram: "https://www.instagram.com/designnext.co/",
   city: "Mumbai",
 };
@@ -10,6 +13,8 @@ export const SITE = {
 export const NAV = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Guides", href: "/guides" },
   { label: "Contact", href: "/contact" },
 ];
 

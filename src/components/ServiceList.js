@@ -13,7 +13,7 @@ function WhenNear({ children }) {
   const ref = useRef(null);
   const [near, setNear] = useState(false);
   useEffect(() => {
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: "300px" });
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: "800px" });
     io.observe(ref.current);
     return () => io.disconnect();
   }, []);
@@ -36,10 +36,12 @@ export default function ServiceList({ items, tone = "dark" }) {
     let id;
     const tick = () => {
       const p = pos.current;
+      id = requestAnimationFrame(tick);
+      // Settled: skip the style write so idle frames cost nothing while scrolling.
+      if (Math.abs(p.x - p.cx) < 0.1 && Math.abs(p.y - p.cy) < 0.1) return;
       p.cx += (p.x - p.cx) * 0.12;
       p.cy += (p.y - p.cy) * 0.12;
       if (box.current) box.current.style.transform = `translate3d(${p.cx}px, ${p.cy}px, 0)`;
-      id = requestAnimationFrame(tick);
     };
     id = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(id);

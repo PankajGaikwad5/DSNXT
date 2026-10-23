@@ -109,6 +109,81 @@ html.lenis body {
   letter-spacing: -0.035em;
 }
 
+/* Long-form article body (guides rendered from Markdown) */
+.prose-guide {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+.prose-guide > * + * {
+  margin-top: 1.25em;
+}
+.prose-guide h2 {
+  margin-top: 2.2em;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.prose-guide h3 {
+  margin-top: 1.8em;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+.prose-guide a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-signal);
+}
+.prose-guide strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.prose-guide ul,
+.prose-guide ol {
+  padding-left: 1.25em;
+}
+.prose-guide ul { list-style: disc; }
+.prose-guide ol { list-style: decimal; }
+.prose-guide li + li {
+  margin-top: 0.4em;
+}
+.prose-guide li::marker {
+  color: var(--color-signal);
+}
+.prose-guide blockquote {
+  border-left: 2px solid var(--color-signal);
+  padding-left: 1.25em;
+  font-size: 1.3rem;
+  color: var(--color-ink);
+}
+.prose-guide img {
+  width: 100%;
+  border-radius: 10px;
+}
+.prose-guide table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.prose-guide th,
+.prose-guide td {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
+  padding: 0.75em 1em 0.75em 0;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-guide code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
 /* Grain overlay */
 .grain::after {
   content: "";

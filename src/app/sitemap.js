@@ -1,7 +1,8 @@
 import { PROJECTS } from "@/data/projects";
 import { SITE } from "@/data/site";
+import { getGuides } from "@/lib/guides";
 
-const UPDATED = "2026-10-17";
+const UPDATED = "2026-10-24";
 
 const PAGES = [
   ["", 1, "weekly"],
@@ -9,6 +10,13 @@ const PAGES = [
   ["/services", 0.9, "monthly"],
   ["/web-design-mumbai", 0.9, "monthly"],
   ["/web-design-worldwide", 0.8, "monthly"],
+  ["/web-design-dubai-qatar", 0.8, "monthly"],
+  ["/web-design-usa", 0.8, "monthly"],
+  ["/web-design-australia", 0.8, "monthly"],
+  ["/website-development-company", 0.9, "monthly"],
+  ["/about", 0.7, "monthly"],
+  ["/founder", 0.7, "monthly"],
+  ["/guides", 0.8, "weekly"],
   ["/ai-website-builder-vs-web-designer", 0.8, "monthly"],
   ["/faq", 0.7, "monthly"],
   ["/preview", 0.8, "monthly"],
@@ -22,6 +30,12 @@ export default function sitemap() {
       lastModified: UPDATED,
       changeFrequency,
       priority,
+    })),
+    ...getGuides().map((g) => ({
+      url: `${SITE.url}/guides/${g.slug}`,
+      lastModified: g.updated,
+      changeFrequency: "monthly",
+      priority: 0.7,
     })),
     ...PROJECTS.map((p) => ({
       url: `${SITE.url}/work/${p.slug}`,

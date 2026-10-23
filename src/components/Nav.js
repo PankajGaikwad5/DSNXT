@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV, SITE } from "@/data/site";
+import { Mail, Phone } from "lucide-react";
 import Logo from "./Logo";
+import { WhatsAppIcon } from "./Icons";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -38,7 +40,7 @@ export default function Nav() {
       >
         <div className="wrap flex h-16 items-center justify-between md:h-20">
           <Link href="/" className="relative z-10" aria-label="Design Next, home">
-            <Logo priority className="h-6 w-auto md:h-7" />
+            <Logo className="h-6 w-auto md:h-7" />
           </Link>
 
           <nav className="hidden items-center gap-10 md:flex">
@@ -78,7 +80,7 @@ export default function Nav() {
       </header>
 
       <div
-        className={`fixed inset-0 z-40 flex flex-col justify-between bg-ink px-5 pb-10 pt-28 transition-[clip-path,visibility] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+        className={`fixed inset-0 z-40 flex flex-col justify-between gap-10 overflow-y-auto bg-ink px-5 pb-10 pt-24 transition-[clip-path,visibility] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
           open ? "visible [clip-path:inset(0_0_0%_0)]" : "invisible [clip-path:inset(0_0_100%_0)]"
         }`}
         inert={!open}
@@ -93,15 +95,22 @@ export default function Nav() {
               }`}
               style={{ transitionDuration: open ? "0.8s" : "0s", transitionDelay: open ? `${0.15 + i * 0.06}s` : "0.8s" }}
             >
-              <Link href={item.href} className="block border-b border-white/10 py-4 text-5xl font-medium tracking-[-0.05em]">
+              <Link href={item.href} className="block border-b border-white/10 py-3 text-4xl font-medium tracking-[-0.05em]">
                 {item.label}
               </Link>
             </div>
           ))}
         </nav>
-        <div className="flex justify-between text-sm text-mute">
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-          <span>Mumbai</span>
+        <div className="flex flex-wrap gap-3 text-sm text-paper">
+          <a href={`mailto:${SITE.email}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2.5">
+            <Mail className="h-4 w-4" /> Email
+          </a>
+          <a href={`tel:${SITE.tel}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2.5">
+            <Phone className="h-4 w-4" /> Call
+          </a>
+          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#25d366] px-4 py-2.5 font-medium text-white">
+            <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+          </a>
         </div>
       </div>
     </>

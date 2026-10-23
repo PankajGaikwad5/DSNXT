@@ -1,11 +1,10 @@
-import Image from "next/image";
-import { Lines, Parallax, Reveal, ScrollWords } from "@/components/Motion";
+import { Lines, Reveal, ScrollWords } from "@/components/Motion";
 import Video from "@/components/Video";
 import CtaBand from "@/components/CtaBand";
 import InkHeader from "@/components/InkHeader";
 import Link from "next/link";
 import Arrow from "@/components/Arrow";
-import { MEDIA, unsplash } from "@/data/site";
+import { MEDIA } from "@/data/site";
 import { JsonLd, breadcrumbs, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -36,19 +35,7 @@ export default function AboutPage() {
         />
       </InkHeader>
 
-      <Parallax className="h-[60svh] md:h-[85svh]" amount={10}>
-        <Image
-          src={unsplash("1529253355930-ddbe423a2ac7", 2400)}
-          alt="Gateway of India, Mumbai"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover grayscale"
-        />
-        <div className="absolute inset-0 bg-ink/30" />
-      </Parallax>
-
-      <section className="wrap grid gap-12 py-32 md:grid-cols-12 md:py-44">
+      <section className="wrap grid gap-12 py-24 md:grid-cols-12 md:py-32">
         <p className="t-label text-mute md:col-span-3">Based in Mumbai</p>
         <div className="md:col-span-9">
           <ScrollWords
@@ -62,15 +49,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="wrap pb-32 md:pb-44">
+      <section className="wrap pb-24 md:pb-32">
         <p className="t-label mb-12 text-mute">What we believe</p>
-        <div className="grid gap-px overflow-hidden rounded-[6px] bg-white/10 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {BELIEFS.map(([title, text], i) => (
-            <Reveal key={title} delay={(i % 2) * 0.08} className="bg-ink p-8 md:p-12">
+            <div key={title} className="rounded-[10px] border border-white/10 p-8 md:p-12">
               <span className="t-label text-signal">0{i + 1}</span>
-              <h2 className="t-h3 mt-10 md:mt-16">{title}</h2>
+              <h2 className="t-h3 mt-6 md:mt-10">{title}</h2>
               <p className="mt-4 max-w-sm text-mute">{text}</p>
-            </Reveal>
+            </div>
           ))}
         </div>
       </section>

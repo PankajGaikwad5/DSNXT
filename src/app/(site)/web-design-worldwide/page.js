@@ -3,7 +3,7 @@ import { AREAS, pageMeta } from "@/lib/seo";
 
 const PATH = "/web-design-worldwide";
 const DESCRIPTION =
-  "Custom web design and Next.js development for clients worldwide, from Mumbai. Design Next works remotely with businesses in the UAE, UK, US, Australia and Singapore. Free homepage preview before you pay.";
+  "Custom web design and Next.js development for clients worldwide, from Mumbai. Design Next works remotely with businesses in Qatar, the UAE, UK, US, Australia and Singapore. Free homepage preview before you pay.";
 
 export const metadata = pageMeta({
   title: "Web Design Agency for International Clients",
@@ -28,7 +28,7 @@ const FAQS = [
   },
   {
     q: "Have you built websites for clients outside India?",
-    a: "Yes. Recent work includes a website for an Aboriginal artist in Australia selling to collectors worldwide, and a digital showroom for a collectible design brand serving India and the Middle East.",
+    a: "Yes. Recent work includes a website for an Aboriginal artist in Australia selling to collectors worldwide, a digital showroom for a collectible design brand serving India and the Middle East, and a website currently being built for a client in Qatar.",
   },
   {
     q: "Can you build a website in more than one language?",

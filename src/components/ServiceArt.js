@@ -238,6 +238,7 @@ function mountScene(el, kind, isLive) {
 
   const clock = new THREE.Timer();
   let raf;
+  let dead = false;
   const loop = (now) => {
     raf = requestAnimationFrame(loop);
     clock.update(now);
@@ -245,9 +246,16 @@ function mountScene(el, kind, isLive) {
     update(clock.getElapsed());
     renderer.render(scene, camera);
   };
-  raf = requestAnimationFrame(loop);
+  // Compile shaders off the main thread where supported, so the first frame doesn't stall scrolling.
+  renderer
+    .compileAsync(scene, camera)
+    .catch(() => {})
+    .then(() => {
+      if (!dead) raf = requestAnimationFrame(loop);
+    });
 
   return () => {
+    dead = true;
     cancelAnimationFrame(raf);
     ro.disconnect();
     scene.traverse((obj) => {
@@ -262,6 +270,15 @@ function mountScene(el, kind, isLive) {
   };
 }
 
+// Scenes are built one at a time, each in its own idle slot. Building several in the
+// same frame blocked the main thread long enough to make scrolling stutter.
+let queue = Promise.resolve();
+const idle = () =>
+  new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 600 }) : setTimeout(r, 60)));
+function schedule(fn) {
+  queue = queue.then(idle).then(fn).catch(() => {});
+}
+
 export default function ServiceArt({ kind, paused = false }) {
   const host = useRef(null);
   const pausedRef = useRef(paused);
@@ -272,17 +289,25 @@ export default function ServiceArt({ kind, paused = false }) {
   useEffect(() => {
     const el = host.current;
     let visible = false;
+    let queued = false;
+    let cancelled = false;
     let stop = null;
-    // Building a scene is expensive, so wait until it is about to scroll into view.
+    // Building a scene is expensive, so wait until it is getting close to the viewport.
     const io = new IntersectionObserver(
       ([e]) => {
         visible = e.isIntersecting;
-        if (visible && !stop) stop = mountScene(el, kind, () => visible && !pausedRef.current) || (() => {});
+        if (visible && !queued) {
+          queued = true;
+          schedule(() => {
+            if (!cancelled) stop = mountScene(el, kind, () => visible && !pausedRef.current) || null;
+          });
+        }
       },
-      { rootMargin: "300px" }
+      { rootMargin: "800px" }
     );
     io.observe(el);
     return () => {
+      cancelled = true;
       io.disconnect();
       stop?.();
     };

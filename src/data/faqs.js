@@ -33,7 +33,7 @@ export const FAQ_GROUPS = [
       },
       {
         q: "Do you work with clients outside Mumbai and India?",
-        a: "Yes. Design Next works remotely with clients across India and internationally, including Australia, the Middle East, the UK and the US. Calls, previews and handover all happen online, so location makes no difference to the result.",
+        a: "Yes. Design Next works remotely with clients across India and internationally, including Qatar, the UAE and the wider Middle East, Australia, the UK and the US. Calls, previews and handover all happen online, so location makes no difference to the result.",
       },
       {
         q: "How much does a custom website cost?",
@@ -76,6 +76,14 @@ export const FAQ_GROUPS = [
       {
         q: "Can I update the website myself?",
         a: "Yes. Where you need to edit content regularly, such as projects, articles or products, a content management system is set up so you can update it without touching code.",
+      },
+      {
+        q: "Can you maintain or update my website after launch?",
+        a: "Yes. Design Next looks after websites after launch, including sites it didn't build: content and image updates, new pages, fixes, security and dependency updates, and speed and SEO check-ups. Maintenance is charged separately from the build, either quoted per request for occasional changes or as a simple monthly plan for sites that change often.",
+      },
+      {
+        q: "Where is my website hosted, and what does hosting cost?",
+        a: "Design Next sites are hosted on Vercel, the platform built by the makers of Next.js, which serves your site from fast servers around the world. Vercel's free plan covers most small business websites, so hosting usually costs nothing. Only if your site outgrows the free limits do you move to Vercel's paid plan, billed by Vercel directly with no markup from us. The hosting account is set up in your name.",
       },
     ],
   },

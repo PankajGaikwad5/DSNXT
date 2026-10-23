@@ -104,7 +104,7 @@ export const PROJECTS = [
     category: "Creative development",
     year: "2026",
     location: "Mumbai",
-    liveUrl: "https://portfolio-three-hazel-lqs3ad2jsn.vercel.app/",
+    liveUrl: "https://pankajgaikwad.online/",
     image: "/work/pankajgaikwad.webp",
     summary: "A playground for motion, type and WebGL that still scores a perfect 100.",
     story:

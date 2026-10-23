@@ -14,9 +14,17 @@ import { JsonLd, breadcrumbs, faqPage, pageMeta, serviceSchema } from "@/lib/seo
 export const metadata = pageMeta({
   title: "Web Design, Next.js Development & SEO Services",
   description:
-    "Custom website design, hand-coded Next.js development and technical and local SEO from one independent studio in Mumbai. Fixed quotes, a free homepage preview, launch in 7 to 10 days.",
+    "Custom website design, hand-coded Next.js development, SEO and website maintenance from one independent studio in Mumbai. Fixed quotes, a free homepage preview, launch in 7 to 10 days.",
   path: "/services",
-  keywords: ["web design services", "Next.js development services", "SEO services Mumbai", "website redesign services", "landing page design"],
+  keywords: [
+    "web design services",
+    "Next.js development services",
+    "SEO services Mumbai",
+    "website redesign services",
+    "landing page design",
+    "website maintenance services",
+    "website updates and support",
+  ],
 });
 
 const TIERS = [
@@ -24,7 +32,7 @@ const TIERS = [
     name: "Launch",
     time: "5 to 7 days",
     for: "Solo practices, consultants and artists",
-    items: ["One or two page custom site", "Mobile-first, sub-second loading", "WhatsApp & call enquiries", "Google indexing & local SEO"],
+    items: ["One or two page custom site", "Mobile-first, sub-second loading", "WhatsApp & call enquiries", "Google indexing & local SEO", "Free hosting on Vercel"],
   },
   {
     name: "Studio",
@@ -37,6 +45,7 @@ const TIERS = [
       "Motion and smooth scrolling",
       "Local & global SEO setup",
       "Enquiries routed to you directly",
+      "Free hosting on Vercel",
     ],
   },
   {
@@ -45,6 +54,15 @@ const TIERS = [
     for: "Media, collectible brands, international teams",
     items: ["Everything in Studio", "CMS and custom integrations", "Audio, video & catalogue systems", "WebGL / 3D moments", "Priority support after launch"],
   },
+];
+
+const CARE = [
+  "Text, image & project updates",
+  "New pages and sections",
+  "Bug fixes & small changes",
+  "Security & dependency updates",
+  "Speed & SEO check-ups",
+  "Hosting & domain help",
 ];
 
 export default function ServicesPage() {
@@ -145,6 +163,32 @@ export default function ServicesPage() {
                 </Link>
               </Reveal>
             ))}
+          </div>
+
+          {/* Care: ongoing work after launch, priced apart from the build */}
+          <div id="maintenance" className="mt-4 grid scroll-mt-28 gap-10 rounded-[6px] border border-ink/15 p-7 md:grid-cols-12 md:p-9">
+            <div className="md:col-span-5">
+              <p className="t-label text-signal">After launch</p>
+              <h3 className="t-h3 mt-4">Care & maintenance</h3>
+              <p className="mt-4 text-ink/65">
+                Need a change every now and then? Updates, fixes and improvements to your site, whether we built it or
+                not. Charged separately from the build: quoted per request, or a simple monthly plan if your site changes
+                often.
+              </p>
+              <Link
+                href="/contact"
+                className="group mt-8 inline-flex items-center gap-3 rounded-full bg-ink px-6 py-4 text-paper transition-colors hover:bg-signal"
+              >
+                Ask about maintenance <Arrow />
+              </Link>
+            </div>
+            <ul className="grid content-start gap-x-8 border-t border-ink/10 sm:grid-cols-2 md:col-span-6 md:col-start-7">
+              {CARE.map((c) => (
+                <li key={c} className="border-b border-ink/10 py-3.5">
+                  {c}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { NAV, SITE } from "@/data/site";
+import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import Logo from "./Logo";
+import { InstagramIcon, WhatsAppIcon } from "./Icons";
 
 function MumbaiClock() {
   const [time, setTime] = useState("");
@@ -30,12 +32,26 @@ export default function Footer() {
             <p className="t-h3 max-w-md">
               Have something worth building? <span className="serif text-mute">Let&apos;s talk.</span>
             </p>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="u-link mt-8 inline-block text-lg text-paper md:text-xl"
-            >
-              {SITE.email}
-            </a>
+            <ul className="mt-8 space-y-3 text-lg text-paper md:text-xl">
+              {[
+                { href: `mailto:${SITE.email}`, label: SITE.email, Icon: Mail },
+                { href: `tel:${SITE.tel}`, label: SITE.phone, Icon: Phone },
+                { href: SITE.whatsapp, label: "Chat on WhatsApp", Icon: WhatsAppIcon, external: true },
+              ].map(({ href, label, Icon, external }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                    className="group inline-flex items-center gap-4"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 transition-colors group-hover:border-signal group-hover:bg-signal">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="u-link">{label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="grid grid-cols-2 gap-10 text-[0.95rem] md:col-span-7 md:grid-cols-4">
@@ -44,8 +60,11 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {[
                   { label: "Web design in Mumbai", href: "/web-design-mumbai" },
+                  { label: "Dubai, Qatar & Gulf", href: "/web-design-dubai-qatar" },
+                  { label: "United States", href: "/web-design-usa" },
+                  { label: "Australia", href: "/web-design-australia" },
                   { label: "Working worldwide", href: "/web-design-worldwide" },
-                  { label: "AI builder vs studio", href: "/ai-website-builder-vs-web-designer" },
+                  { label: "Website development", href: "/website-development-company" },
                   { label: "FAQ", href: "/faq" },
                 ].map((l) => (
                   <li key={l.href}>
@@ -72,16 +91,27 @@ export default function Footer() {
               <p className="t-label mb-5 text-dim">Elsewhere</p>
               <ul className="space-y-2.5">
                 <li>
-                  <a href={SITE.instagram} target="_blank" rel="noreferrer" className="u-link text-mute hover:text-paper">
-                    Instagram
+                  <a href={SITE.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-mute transition-colors hover:text-paper">
+                    <InstagramIcon className="h-4 w-4" />
+                    <span className="u-link">Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-mute transition-colors hover:text-paper">
+                    <WhatsAppIcon className="h-4 w-4" />
+                    <span className="u-link">WhatsApp</span>
                   </a>
                 </li>
               </ul>
             </div>
             <div>
               <p className="t-label mb-5 text-dim">Studio</p>
-              <p className="text-mute">Mumbai, India</p>
-              <p className="text-mute">Working worldwide</p>
+              <p className="flex items-center gap-2 text-mute">
+                <MapPin className="h-4 w-4" /> Mumbai, India
+              </p>
+              <p className="flex items-center gap-2 text-mute">
+                <Globe className="h-4 w-4" /> Working worldwide
+              </p>
               <p className="mt-2 flex items-center gap-2 text-paper">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />

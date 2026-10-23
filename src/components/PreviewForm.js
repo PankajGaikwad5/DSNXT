@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Mail } from "lucide-react";
 import Arrow from "./Arrow";
+import { WhatsAppIcon } from "./Icons";
 import { SITE } from "@/data/site";
 
 const FIELDS = [
@@ -17,7 +19,7 @@ export default function PreviewForm() {
 
   const body = `Hi Design Next,\n\nI'd like a free homepage preview.\n\nName: ${data.name ?? ""}\nBusiness: ${data.business ?? ""}\nWhat we do: ${data.what ?? ""}\nContact: ${data.contact ?? ""}`;
   const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(`Free preview: ${data.business ?? ""}`)}&body=${encodeURIComponent(body)}`;
-  const whatsapp = `https://wa.me/?text=${encodeURIComponent(body)}`;
+  const whatsapp = `${SITE.whatsapp}?text=${encodeURIComponent(body)}`;
 
   return (
     <>
@@ -61,7 +63,7 @@ export default function PreviewForm() {
           <p className="t-lead mt-6 max-w-md text-ink/60">Choose how to send your brief. It&apos;s already written for you.</p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href={mailto} className="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-paper hover:bg-signal">
-              Send by email <Arrow />
+              <Mail className="h-4 w-4" /> Send by email
             </a>
             <a
               href={whatsapp}
@@ -69,7 +71,7 @@ export default function PreviewForm() {
               rel="noreferrer"
               className="group inline-flex items-center gap-3 rounded-full border border-ink/20 px-7 py-4 hover:border-ink"
             >
-              Send on WhatsApp <Arrow />
+              <WhatsAppIcon className="h-4 w-4 text-[#25d366]" /> Send on WhatsApp
             </a>
           </div>
           <button onClick={() => setSent(false)} className="u-link mt-10 text-sm text-ink/50">

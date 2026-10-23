@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { Mail } from "lucide-react";
 import Arrow from "./Arrow";
+import { WhatsAppIcon } from "./Icons";
 import { SITE } from "@/data/site";
 
-const NEEDS = ["New website", "Redesign", "Landing page", "Something else"];
+const NEEDS = ["New website", "Redesign", "Landing page", "Maintenance", "Something else"];
 const TIMING = ["As soon as possible", "Within 1 to 2 months", "Just exploring"];
 
 function Chips({ label, options, value, onChange }) {
@@ -74,7 +76,7 @@ export default function ContactForm() {
     .join("\n");
   const subject = `New enquiry from ${f.name}${f.company ? `, ${f.company}` : ""}`;
   const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const whatsapp = `https://wa.me/?text=${encodeURIComponent(body)}`;
+  const whatsapp = `${SITE.whatsapp}?text=${encodeURIComponent(body)}`;
 
   if (sent) {
     return (
@@ -87,10 +89,10 @@ export default function ContactForm() {
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
           <a href={mailto} className="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-paper transition-colors hover:bg-signal">
-            Send by email <Arrow />
+            <Mail className="h-4 w-4" /> Send by email
           </a>
           <a href={whatsapp} target="_blank" rel="noreferrer" className="group inline-flex items-center gap-3 rounded-full border border-ink/20 px-7 py-4 transition-colors hover:border-ink">
-            Send on WhatsApp <Arrow />
+            <WhatsAppIcon className="h-4 w-4 text-[#25d366]" /> Send on WhatsApp
           </a>
         </div>
         <button onClick={() => setSent(false)} className="u-link mt-10 w-fit text-sm text-ink/50">
