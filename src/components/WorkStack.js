@@ -87,17 +87,18 @@ export default function WorkStack({ projects }) {
     });
   }, []);
 
-  // Paged stack: inside it the wheel no longer scrolls freely. Each gesture (a wheel spin,
-  // or a trackpad flick with its momentum) moves exactly one project and rests there,
-  // centred. A short pause in input is needed before the next gesture moves on. Past the
-  // first or last card, scrolling is normal again.
+  // Paged stack: inside it, a scroll moves exactly one project and rests there, centred.
+  // Input is only held while that short glide runs; straight after, the next scroll moves
+  // on, so continuous scrolling pages through the projects instead of being blocked.
+  // Past the first or last card, scrolling is normal again.
   useEffect(() => {
     return onLenis((lenis, snap) => {
-      const QUIET = 160; // ms of no wheel input that ends a gesture
-      let index = null; // card being moved to, while a step runs
+      const STEP = 0.6; // s, length of one glide
       let stepping = false;
-      let used = false; // the current gesture has already moved a card
-      let last = 0;
+      let stepAt = 0; // when the current glide started
+      let endAt = -Infinity; // when the last glide ended
+      let prev = 0; // |deltaY| of the previous wheel event
+      let lastAt = 0;
 
       const geo = () => ({
         top: wrap.current.getBoundingClientRect().top + lenis.scroll,
@@ -108,12 +109,16 @@ export default function WorkStack({ projects }) {
       const removeGuard = setWheelGuard(({ deltaY, event }) => {
         if (!event.type.includes("wheel") || event.ctrlKey || !wrap.current) return true;
         const now = performance.now();
-        const fresh = now - last > QUIET;
-        last = now;
-        if (fresh) used = false;
+        const d = Math.abs(deltaY);
+        const gap = now - lastAt;
+        const rising = d > prev * 1.5;
+        prev = d;
+        lastAt = now;
+        // Never stay held longer than a glide, even if its completion is missed.
+        if (stepping && now - stepAt > STEP * 1000 + 150) stepping = false;
 
         const { top, h, n } = geo();
-        const at = stepping && index !== null ? index : (lenis.scroll - top) / h;
+        const at = (lenis.scroll - top) / h;
         const target = deltaY > 0 ? Math.floor(at + 0.02) + 1 : Math.ceil(at - 0.02) - 1;
         // Outside the stack, or stepping off either end: let the page scroll as usual.
         if (!stepping && (target < 0 || target > n - 1)) {
@@ -123,18 +128,21 @@ export default function WorkStack({ projects }) {
 
         if (event.cancelable) event.preventDefault();
         snap?.stop();
-        if (stepping || used || Math.abs(deltaY) < 2) return false;
+        if (stepping || d < 2) return false;
+        // Right after a glide, ignore only the fading momentum of the same flick: a new
+        // scroll (after a gap, getting stronger, or simply a moment later) moves on.
+        const fresh = gap > 80 || rising || (now - endAt > 200 && d >= 12);
+        if (now - endAt < 600 && !fresh) return false;
 
-        used = true;
         stepping = true;
-        index = target;
+        stepAt = now;
         lenis.scrollTo(top + target * h, {
-          duration: 0.9,
+          duration: STEP,
           easing: easeOutQuint,
           force: true,
           onComplete: () => {
             stepping = false;
-            index = null;
+            endAt = performance.now();
           },
         });
         return false;
