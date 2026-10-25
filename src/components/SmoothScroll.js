@@ -14,6 +14,18 @@ export function scrollToTop() {
 }
 
 const listeners = new Set();
+let wheelGuard = null;
+
+/**
+ * Lets one component take over wheel input: fn(data) returning false stops Lenis
+ * scrolling for that event (fn must preventDefault itself). Returns a remover.
+ */
+export function setWheelGuard(fn) {
+  wheelGuard = fn;
+  return () => {
+    if (wheelGuard === fn) wheelGuard = null;
+  };
+}
 
 /** Calls fn(lenis, snap) once smooth scrolling is running; fn may return a cleanup. Returns an unsubscribe. */
 export function onLenis(fn) {
@@ -53,6 +65,7 @@ export default function SmoothScroll({ children }) {
         lerp: 0.075,
         wheelMultiplier: 0.85,
         smoothWheel: true,
+        virtualScroll: (data) => !wheelGuard || wheelGuard(data) !== false,
       });
 
       // Proximity: only settles when you stop close to a section start, never mid-flow.

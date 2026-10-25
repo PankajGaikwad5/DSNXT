@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { onScrollFrame, progress, mix } from "@/lib/scroll";
 import WorkVideo from "./WorkVideo";
-import { onLenis } from "./SmoothScroll";
+import { onLenis, setWheelGuard } from "./SmoothScroll";
 
 const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
@@ -87,36 +87,61 @@ export default function WorkStack({ projects }) {
     });
   }, []);
 
-  // Snappy stack: when a scroll gesture ends inside it, glide to the next card in that
-  // direction, so it always rests on one project, centred. The site's soft snap is
-  // paused in here so the two never pull against each other.
+  // Paged stack: inside it the wheel no longer scrolls freely. Each gesture (a wheel spin,
+  // or a trackpad flick with its momentum) moves exactly one project and rests there,
+  // centred. A short pause in input is needed before the next gesture moves on. Past the
+  // first or last card, scrolling is normal again.
   useEffect(() => {
     return onLenis((lenis, snap) => {
-      let timer = 0;
-      let dir = 1;
-      const raw = () => {
-        const h = cards.current[0]?.parentElement.offsetHeight || window.innerHeight;
-        const top = wrap.current.getBoundingClientRect().top + lenis.scroll;
-        return { top, h, at: (lenis.targetScroll - top) / h };
-      };
-      const settle = () => {
-        const { top, h, at } = raw();
-        const n = cards.current.length;
-        const target = dir > 0 ? Math.ceil(at - 0.03) : Math.floor(at + 0.03);
-        if (target < 0 || target > n - 1 || Math.abs(at - target) >= 1) return;
-        lenis.scrollTo(top + target * h, { duration: 0.75, easing: easeOutQuint });
-      };
-      const off = lenis.on("virtual-scroll", (e) => {
-        if (e.deltaY) dir = Math.sign(e.deltaY);
-        const { at } = raw();
-        if (at > -1 && at < cards.current.length - 1 + 0.03) snap?.stop();
-        else snap?.start();
-        clearTimeout(timer);
-        timer = setTimeout(settle, 90);
+      const QUIET = 160; // ms of no wheel input that ends a gesture
+      let index = null; // card being moved to, while a step runs
+      let stepping = false;
+      let used = false; // the current gesture has already moved a card
+      let last = 0;
+
+      const geo = () => ({
+        top: wrap.current.getBoundingClientRect().top + lenis.scroll,
+        h: cards.current[0]?.parentElement.offsetHeight || window.innerHeight,
+        n: cards.current.length,
       });
+
+      const removeGuard = setWheelGuard(({ deltaY, event }) => {
+        if (!event.type.includes("wheel") || event.ctrlKey || !wrap.current) return true;
+        const now = performance.now();
+        const fresh = now - last > QUIET;
+        last = now;
+        if (fresh) used = false;
+
+        const { top, h, n } = geo();
+        const at = stepping && index !== null ? index : (lenis.scroll - top) / h;
+        const target = deltaY > 0 ? Math.floor(at + 0.02) + 1 : Math.ceil(at - 0.02) - 1;
+        // Outside the stack, or stepping off either end: let the page scroll as usual.
+        if (!stepping && (target < 0 || target > n - 1)) {
+          snap?.start();
+          return true;
+        }
+
+        if (event.cancelable) event.preventDefault();
+        snap?.stop();
+        if (stepping || used || Math.abs(deltaY) < 2) return false;
+
+        used = true;
+        stepping = true;
+        index = target;
+        lenis.scrollTo(top + target * h, {
+          duration: 0.9,
+          easing: easeOutQuint,
+          force: true,
+          onComplete: () => {
+            stepping = false;
+            index = null;
+          },
+        });
+        return false;
+      });
+
       return () => {
-        off();
-        clearTimeout(timer);
+        removeGuard();
         snap?.start();
       };
     });
