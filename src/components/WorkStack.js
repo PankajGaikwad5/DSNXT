@@ -5,16 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { onScrollFrame, progress, mix } from "@/lib/scroll";
 import WorkVideo from "./WorkVideo";
-import { onLenis, setWheelGuard } from "./SmoothScroll";
-
-const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
 // Screenshots are ~1366Ã—690. Cards use the same ratio so the image always fills, uncropped.
 const RATIO = 1366 / 690;
 
 function Card({ project, index, total, cardRef }) {
   return (
-    <div className="sticky top-0 flex h-[100svh] items-center justify-center [perspective:1600px]">
+    <div data-snap className="sticky top-0 flex h-[100svh] items-center justify-center [perspective:1600px]">
       <div
         ref={(el) => (cardRef.current[index] = el)}
         style={{ width: `min(100%, calc(72svh * ${RATIO}))` }}
@@ -84,74 +81,6 @@ export default function WorkStack({ projects }) {
         card.querySelector("[data-img]").style.transform = `scale(${mix(i === 0 ? 1 : 1.08, 1, enter)})`;
         card.querySelector("[data-dim]").style.opacity = last ? 0 : Math.min(1, leave / 0.8);
       });
-    });
-  }, []);
-
-  // Paged stack: inside it, a scroll moves exactly one project and rests there, centred.
-  // Input is only held while that short glide runs; straight after, the next scroll moves
-  // on, so continuous scrolling pages through the projects instead of being blocked.
-  // Past the first or last card, scrolling is normal again.
-  useEffect(() => {
-    return onLenis((lenis, snap) => {
-      const STEP = 0.6; // s, length of one glide
-      let stepping = false;
-      let stepAt = 0; // when the current glide started
-      let endAt = -Infinity; // when the last glide ended
-      let prev = 0; // |deltaY| of the previous wheel event
-      let lastAt = 0;
-
-      const geo = () => ({
-        top: wrap.current.getBoundingClientRect().top + lenis.scroll,
-        h: cards.current[0]?.parentElement.offsetHeight || window.innerHeight,
-        n: cards.current.length,
-      });
-
-      const removeGuard = setWheelGuard(({ deltaY, event }) => {
-        if (!event.type.includes("wheel") || event.ctrlKey || !wrap.current) return true;
-        const now = performance.now();
-        const d = Math.abs(deltaY);
-        const gap = now - lastAt;
-        const rising = d > prev * 1.5;
-        prev = d;
-        lastAt = now;
-        // Never stay held longer than a glide, even if its completion is missed.
-        if (stepping && now - stepAt > STEP * 1000 + 150) stepping = false;
-
-        const { top, h, n } = geo();
-        const at = (lenis.scroll - top) / h;
-        const target = deltaY > 0 ? Math.floor(at + 0.02) + 1 : Math.ceil(at - 0.02) - 1;
-        // Outside the stack, or stepping off either end: let the page scroll as usual.
-        if (!stepping && (target < 0 || target > n - 1)) {
-          snap?.start();
-          return true;
-        }
-
-        if (event.cancelable) event.preventDefault();
-        snap?.stop();
-        if (stepping || d < 2) return false;
-        // Right after a glide, ignore only the fading momentum of the same flick: a new
-        // scroll (after a gap, getting stronger, or simply a moment later) moves on.
-        const fresh = gap > 80 || rising || (now - endAt > 200 && d >= 12);
-        if (now - endAt < 600 && !fresh) return false;
-
-        stepping = true;
-        stepAt = now;
-        lenis.scrollTo(top + target * h, {
-          duration: STEP,
-          easing: easeOutQuint,
-          force: true,
-          onComplete: () => {
-            stepping = false;
-            endAt = performance.now();
-          },
-        });
-        return false;
-      });
-
-      return () => {
-        removeGuard();
-        snap?.start();
-      };
     });
   }, []);
 
