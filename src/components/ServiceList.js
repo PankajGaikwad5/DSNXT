@@ -32,6 +32,15 @@ export default function ServiceList({ items, tone = "dark" }) {
   const box = useRef(null);
   const pos = useRef({ x: 0, y: 0, cx: 0, cy: 0 });
 
+  // Load three.js and compile the scenes while the visitor is still up the page,
+  // so reaching this section (or hovering a row) never stalls scrolling.
+  useEffect(() => {
+    if (!items.some((it) => it.art)) return;
+    const start = () => import("./ServiceArt").then((m) => m.warm()).catch(() => {});
+    const id = window.requestIdleCallback ? requestIdleCallback(start, { timeout: 3000 }) : setTimeout(start, 1500);
+    return () => (window.cancelIdleCallback ? cancelIdleCallback(id) : clearTimeout(id));
+  }, [items]);
+
   useEffect(() => {
     let id;
     const tick = () => {

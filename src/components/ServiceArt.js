@@ -181,24 +181,39 @@ function buildSearch(scene, M) {
 
 const BUILDERS = { design: buildDesign, development: buildDevelopment, search: buildSearch };
 
-/** Builds and runs one scene inside el. Returns its cleanup. */
-function mountScene(el, kind, isLive) {
+/*
+ * Every scene draws through one shared, offscreen renderer and is copied into its own
+ * 2D canvas. One WebGL context means the studio environment and every shader are built
+ * once, during idle time after the page loads, instead of when a section scrolls in.
+ */
+let gl = null; // { renderer, env, M } once built, false if WebGL is unavailable
+const pool = {}; // idle scenes per kind, reused so their shaders stay compiled
+const views = new Set();
+const bufSize = new THREE.Vector2();
+let raf = 0;
+
+function getRenderer() {
+  if (gl !== null) return gl;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
   } catch {
-    return;
+    return (gl = false);
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(1);
+  renderer.setClearColor(0x000000, 0);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.NeutralToneMapping;
-  el.appendChild(renderer.domElement);
-  renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
-
-  const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  pmrem.dispose();
+  return (gl = { renderer, env, M: materials() });
+}
+
+function buildScene(kind) {
+  const { env, M } = gl;
+  const scene = new THREE.Scene();
   scene.environment = env;
   scene.environmentIntensity = 0.55;
 
@@ -217,66 +232,104 @@ function mountScene(el, kind, isLive) {
   ground.receiveShadow = true;
   scene.add(ground);
 
-  const M = materials();
   const update = BUILDERS[kind](scene, M);
-
   const camera = new THREE.OrthographicCamera();
   camera.position.set(10, 9, 10);
   camera.lookAt(0, 0.6, 0);
+  return { kind, scene, camera, update };
+}
+
+/** Draws s into the bottom-left w×h pixels of the shared buffer. */
+function draw(s, w, h) {
+  const { renderer } = gl;
+  const size = renderer.getSize(bufSize);
+  if (size.x < w || size.y < h) renderer.setSize(Math.max(size.x, w), Math.max(size.y, h), false);
+  renderer.setViewport(0, 0, w, h);
+  renderer.setScissor(0, 0, w, h);
+  renderer.setScissorTest(true);
+  renderer.render(s.scene, s.camera);
+}
+
+function acquire(kind) {
+  return pool[kind]?.pop() || buildScene(kind);
+}
+
+function release(s) {
+  (pool[s.kind] ||= []).push(s);
+}
+
+function frame(now) {
+  raf = views.size ? requestAnimationFrame(frame) : 0;
+  const canvas = gl.renderer.domElement;
+  views.forEach((v) => {
+    if (!v.isLive()) return;
+    const { width: w, height: h } = v.canvas;
+    v.scene.update((now - v.start) / 1000);
+    draw(v.scene, w, h);
+    v.ctx.clearRect(0, 0, w, h);
+    v.ctx.drawImage(canvas, 0, canvas.height - h, w, h, 0, 0, w, h);
+  });
+}
+
+// Heavy steps run one at a time, each in its own idle slot, so no single frame stalls.
+let queue = Promise.resolve();
+const idle = () =>
+  new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 1500 }) : setTimeout(r, 60)));
+function schedule(fn) {
+  return (queue = queue.then(idle).then(fn).catch(() => {}));
+}
+
+let warming = null;
+/** Builds the renderer and compiles every scene ahead of time. Safe to call repeatedly. */
+export function warm() {
+  if (warming) return warming;
+  schedule(getRenderer);
+  Object.keys(BUILDERS).forEach((kind) =>
+    schedule(() => {
+      if (!gl || pool[kind]?.length) return;
+      const s = buildScene(kind);
+      s.update(0);
+      // A tiny draw compiles the colour and shadow programs up front.
+      draw(s, 4, 4);
+      release(s);
+    })
+  );
+  return (warming = queue);
+}
+
+/** Builds and runs one scene inside el. Returns its cleanup. */
+function mountScene(el, kind, isLive) {
+  if (!getRenderer()) return;
+  const canvas = document.createElement("canvas");
+  canvas.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block";
+  el.appendChild(canvas);
+  const s = acquire(kind);
+  const view = { canvas, ctx: canvas.getContext("2d"), scene: s, isLive, start: performance.now() };
+
   const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio, 2);
     const w = el.clientWidth || 1;
     const h = el.clientHeight || 1;
-    renderer.setSize(w, h, false);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
     const aspect = w / h;
     const f = aspect < 1.25 ? (4.4 * 1.25) / aspect : 4.4;
-    Object.assign(camera, { left: -f * aspect, right: f * aspect, top: f, bottom: -f });
-    camera.updateProjectionMatrix();
+    Object.assign(s.camera, { left: -f * aspect, right: f * aspect, top: f, bottom: -f });
+    s.camera.updateProjectionMatrix();
   };
   resize();
   const ro = new ResizeObserver(resize);
   ro.observe(el);
 
-  const clock = new THREE.Timer();
-  let raf;
-  let dead = false;
-  const loop = (now) => {
-    raf = requestAnimationFrame(loop);
-    clock.update(now);
-    if (!isLive()) return;
-    update(clock.getElapsed());
-    renderer.render(scene, camera);
-  };
-  // Compile shaders off the main thread where supported, so the first frame doesn't stall scrolling.
-  renderer
-    .compileAsync(scene, camera)
-    .catch(() => {})
-    .then(() => {
-      if (!dead) raf = requestAnimationFrame(loop);
-    });
+  views.add(view);
+  if (!raf) raf = requestAnimationFrame(frame);
 
   return () => {
-    dead = true;
-    cancelAnimationFrame(raf);
+    views.delete(view);
     ro.disconnect();
-    scene.traverse((obj) => {
-      obj.geometry?.dispose();
-    });
-    Object.values(M).forEach((m) => m.dispose());
-    env.dispose();
-    pmrem.dispose();
-    renderer.dispose();
-    renderer.forceContextLoss();
-    renderer.domElement.remove();
+    canvas.remove();
+    release(s);
   };
-}
-
-// Scenes are built one at a time, each in its own idle slot. Building several in the
-// same frame blocked the main thread long enough to make scrolling stutter.
-let queue = Promise.resolve();
-const idle = () =>
-  new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 600 }) : setTimeout(r, 60)));
-function schedule(fn) {
-  queue = queue.then(idle).then(fn).catch(() => {});
 }
 
 export default function ServiceArt({ kind, paused = false }) {
@@ -292,12 +345,13 @@ export default function ServiceArt({ kind, paused = false }) {
     let queued = false;
     let cancelled = false;
     let stop = null;
-    // Building a scene is expensive, so wait until it is getting close to the viewport.
+    warm();
     const io = new IntersectionObserver(
       ([e]) => {
         visible = e.isIntersecting;
         if (visible && !queued) {
           queued = true;
+          // Behind the warm-up in the queue, so mounting is only a cheap copy into a canvas.
           schedule(() => {
             if (!cancelled) stop = mountScene(el, kind, () => visible && !pausedRef.current) || null;
           });
