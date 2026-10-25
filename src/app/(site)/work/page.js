@@ -3,6 +3,7 @@ import { Lines, Reveal } from "@/components/Motion";
 import CtaBand from "@/components/CtaBand";
 import InkHeader from "@/components/InkHeader";
 import Image from "next/image";
+import WorkVideo from "@/components/WorkVideo";
 import { PROJECTS } from "@/data/projects";
 import { pageMeta } from "@/lib/seo";
 
@@ -53,6 +54,10 @@ export default function WorkPage() {
                     fill
                     sizes="(min-width: 768px) 70vw, 100vw"
                     className="object-cover object-top transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+                  />
+                  <WorkVideo
+                    src={p.video}
+                    className="transition-[opacity,transform] duration-[0.4s,1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
                   />
                 </div>
                 <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">

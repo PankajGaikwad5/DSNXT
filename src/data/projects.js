@@ -8,6 +8,7 @@ export const PROJECTS = [
     location: "Mumbai & Goa",
     liveUrl: "https://www.karandesai.in",
     image: "/work/KDAD.webp",
+    video: "/work/video/karan-desai.mp4",
     summary: "A quiet, image-led monograph for one of India's leading luxury architects.",
     story:
       "The brief was restraint. We stripped the site back to the work itself: full-bleed photography, generous space and a type system borrowed from architectural drawings. It loads before the client finishes blinking.",
@@ -22,6 +23,7 @@ export const PROJECTS = [
     location: "India",
     liveUrl: "https://cuddlesbymiaco.com/",
     image: "/work/cuddles.webp",
+    video: "/work/video/cuddles-by-mia-co.mp4",
     summary: "A soft, story-led Shopify store for heirloom baby essentials, built from scratch.",
     story:
       "No off-the-shelf theme. We hand-built a custom Shopify storefront that feels as gentle as the swaddles it sells: curated collections by moment, from first cuddles to bath time, Mia's Picks and gift sets that make the parent-to-be easy to shop for.",
@@ -36,6 +38,7 @@ export const PROJECTS = [
     location: "Mumbai",
     liveUrl: "https://pkdstudio.in/",
     image: "/work/pkd.webp",
+    video: "/work/video/pkd-studio.mp4",
     summary: "Sculptural interiors, presented like a gallery and wired straight to WhatsApp.",
     story:
       "PKD's projects sell themselves in person. Online, we let the rooms breathe with an editorial gallery, then made the next step obvious: one tap to start a conversation with the founder.",
@@ -50,6 +53,7 @@ export const PROJECTS = [
     location: "India & Middle East",
     liveUrl: "https://www.karandesaihome.com/",
     image: "/work/KDH.webp",
+    video: "/work/video/karan-desai-home.mp4",
     summary: "A private digital showroom for high-ticket collectible design.",
     story:
       "Collectors don't add to cart. We built a catalogue that feels like walking a private gallery, with a concierge enquiry flow in place of a checkout.",
@@ -64,6 +68,7 @@ export const PROJECTS = [
     location: "Australia & worldwide",
     liveUrl: "https://www.timyule.au/",
     image: "/work/timyule.webp",
+    video: "/work/video/timothy-yule.mp4",
     summary: "A home of his own for an acclaimed Aboriginal artist, away from the algorithm.",
     story:
       "Timothy's work deserved better than a social feed. We gave him an archive he owns, with faithful colour, an exhibition timeline and direct private sales to collectors in Sydney, London and New York.",
@@ -78,6 +83,7 @@ export const PROJECTS = [
     location: "Mumbai",
     liveUrl: "https://www.shukhabarwithkd.com/",
     image: "/work/shukhabar.webp",
+    video: "/work/video/shu-khabar.mp4",
     summary: "The home base for India's architecture podcast.",
     story:
       "Every episode, every platform, one address. Spotify, Apple and YouTube in a single fast portal, plus a media kit that turns sponsors into returning partners.",
@@ -92,6 +98,7 @@ export const PROJECTS = [
     location: "Maharashtra",
     liveUrl: "https://www.srjmd.org/",
     image: "/work/srjmd.webp",
+    video: "/work/video/jivamaitridham.mp4",
     summary: "An emergency-first site for an animal hospital, built for patchy signal.",
     story:
       "When an animal is hurt, seconds matter. One-tap rescue calls, simple donations and a volunteer portal, engineered to load instantly on a weak rural connection.",
@@ -106,6 +113,7 @@ export const PROJECTS = [
     location: "Mumbai",
     liveUrl: "https://pankajgaikwad.online/",
     image: "/work/pankajgaikwad.webp",
+    video: "/work/video/pankaj-gaikwad.mp4",
     summary: "A playground for motion, type and WebGL that still scores a perfect 100.",
     story:
       "Our own testing ground. Kinetic typography and shaders, built to prove that ambitious motion and raw speed don't have to be a trade-off.",

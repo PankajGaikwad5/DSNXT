@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Lines, Reveal } from "@/components/Motion";
 import Image from "next/image";
 import Arrow from "@/components/Arrow";
+import WorkVideo from "@/components/WorkVideo";
 import InkHeader from "@/components/InkHeader";
 import { PROJECTS, getProject } from "@/data/projects";
 import { JsonLd, ORG_ID, breadcrumbs } from "@/lib/seo";
@@ -72,6 +73,7 @@ export default async function CaseStudy({ params }) {
         <div className="wrap">
           <Reveal className="relative aspect-[1366/690] overflow-hidden rounded-[12px] bg-paper-2">
             <Image src={p.image} alt={p.title} fill priority sizes="100vw" className="object-cover object-top" />
+            <WorkVideo src={p.video} />
           </Reveal>
         </div>
       </section>

@@ -13,6 +13,19 @@ export function scrollToTop() {
   else window.scrollTo(0, 0);
 }
 
+const listeners = new Set();
+
+/** Calls fn(lenis, snap) once smooth scrolling is running; fn may return a cleanup. Returns an unsubscribe. */
+export function onLenis(fn) {
+  const entry = { fn, cleanup: null };
+  listeners.add(entry);
+  if (lenis) entry.cleanup = fn(lenis, snap);
+  return () => {
+    listeners.delete(entry);
+    entry.cleanup?.();
+  };
+}
+
 let removeSnaps = () => {};
 
 /** Registers every [data-snap] element on the page as a soft snap point, replacing the last set. */
@@ -51,6 +64,7 @@ export default function SmoothScroll({ children }) {
         easing: easeOutQuint,
       });
       registerSnaps();
+      listeners.forEach((l) => (l.cleanup = l.fn(lenis, snap)));
 
       const raf = (t) => {
         lenis.raf(t);
@@ -63,6 +77,10 @@ export default function SmoothScroll({ children }) {
       cancelled = true;
       cancelAnimationFrame(id);
       removeSnaps = () => {};
+      listeners.forEach((l) => {
+        l.cleanup?.();
+        l.cleanup = null;
+      });
       snap?.destroy();
       lenis?.destroy();
       snap = null;

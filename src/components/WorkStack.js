@@ -4,13 +4,17 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { onScrollFrame, progress, mix } from "@/lib/scroll";
+import WorkVideo from "./WorkVideo";
+import { onLenis } from "./SmoothScroll";
+
+const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
 // Screenshots are ~1366Ã—690. Cards use the same ratio so the image always fills, uncropped.
 const RATIO = 1366 / 690;
 
 function Card({ project, index, total, cardRef }) {
   return (
-    <div data-snap className="sticky top-0 flex h-[100svh] items-center justify-center [perspective:1600px]">
+    <div className="sticky top-0 flex h-[100svh] items-center justify-center [perspective:1600px]">
       <div
         ref={(el) => (cardRef.current[index] = el)}
         style={{ width: `min(100%, calc(72svh * ${RATIO}))` }}
@@ -25,6 +29,10 @@ function Card({ project, index, total, cardRef }) {
                 fill
                 sizes="(min-width: 1024px) 90vw, 100vw"
                 className="object-cover object-top transition-transform duration-[1.6s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+              />
+              <WorkVideo
+                src={project.video}
+                className="transition-[opacity,transform] duration-[0.4s,1.6s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
               />
             </div>
           </div>
@@ -76,6 +84,41 @@ export default function WorkStack({ projects }) {
         card.querySelector("[data-img]").style.transform = `scale(${mix(i === 0 ? 1 : 1.08, 1, enter)})`;
         card.querySelector("[data-dim]").style.opacity = last ? 0 : Math.min(1, leave / 0.8);
       });
+    });
+  }, []);
+
+  // Snappy stack: when a scroll gesture ends inside it, glide to the next card in that
+  // direction, so it always rests on one project, centred. The site's soft snap is
+  // paused in here so the two never pull against each other.
+  useEffect(() => {
+    return onLenis((lenis, snap) => {
+      let timer = 0;
+      let dir = 1;
+      const raw = () => {
+        const h = cards.current[0]?.parentElement.offsetHeight || window.innerHeight;
+        const top = wrap.current.getBoundingClientRect().top + lenis.scroll;
+        return { top, h, at: (lenis.targetScroll - top) / h };
+      };
+      const settle = () => {
+        const { top, h, at } = raw();
+        const n = cards.current.length;
+        const target = dir > 0 ? Math.ceil(at - 0.03) : Math.floor(at + 0.03);
+        if (target < 0 || target > n - 1 || Math.abs(at - target) >= 1) return;
+        lenis.scrollTo(top + target * h, { duration: 0.75, easing: easeOutQuint });
+      };
+      const off = lenis.on("virtual-scroll", (e) => {
+        if (e.deltaY) dir = Math.sign(e.deltaY);
+        const { at } = raw();
+        if (at > -1 && at < cards.current.length - 1 + 0.03) snap?.stop();
+        else snap?.start();
+        clearTimeout(timer);
+        timer = setTimeout(settle, 90);
+      });
+      return () => {
+        off();
+        clearTimeout(timer);
+        snap?.start();
+      };
     });
   }, []);
 
