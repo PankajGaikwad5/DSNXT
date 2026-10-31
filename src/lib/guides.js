@@ -54,20 +54,25 @@ function faqsFrom(body) {
     .filter((f) => f.q && f.a);
 }
 
-const GUIDES = fs.existsSync(DIR)
-  ? fs
-      .readdirSync(DIR)
-      .filter((f) => f.endsWith(".md"))
-      .map(parse)
-      .sort((a, b) => (a.date < b.date ? 1 : -1))
-  : [];
+function load() {
+  return fs.existsSync(DIR)
+    ? fs
+        .readdirSync(DIR)
+        .filter((f) => f.endsWith(".md"))
+        .map(parse)
+        .sort((a, b) => (a.date < b.date ? 1 : -1))
+    : [];
+}
+
+// Read once in production; re-read in dev so added or removed guides show without a restart.
+const GUIDES = process.env.NODE_ENV === "production" ? load() : null;
 
 export function getGuides() {
-  return GUIDES;
+  return GUIDES ?? load();
 }
 
 export function getGuide(slug) {
-  const g = GUIDES.find((x) => x.slug === slug);
+  const g = getGuides().find((x) => x.slug === slug);
   if (!g) return null;
   return { ...g, html: marked.parse(g.body), faqs: faqsFrom(g.body) };
 }
