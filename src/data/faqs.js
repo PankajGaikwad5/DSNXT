@@ -29,7 +29,7 @@ export const FAQ_GROUPS = [
       ...FAQS,
       {
         q: "What does Design Next do?",
-        a: "Design Next is an independent web design and development studio based in Mumbai, India. It designs and hand-codes custom websites in Next.js for architects, interior designers, artists, creators and premium brands, and handles SEO, hosting setup and launch.",
+        a: "Design Next is an independent web design and development studio based in Mumbai, India. It designs and hand-codes custom websites in Next.js and custom Shopify stores for architects, interior designers, artists, creators and premium brands. It also offers brand direction for the web, SEO, hosting setup and launch, and monthly plans for ongoing care and search work.",
       },
       {
         q: "Do you work with clients outside Mumbai and India?",
@@ -80,6 +80,18 @@ export const FAQ_GROUPS = [
       {
         q: "Can you maintain or update my website after launch?",
         a: "Yes. Design Next looks after websites after launch, including sites it didn't build: content and image updates, new pages, fixes, security and dependency updates, and speed and SEO check-ups. Maintenance is charged separately from the build, either quoted per request for occasional changes or as a simple monthly plan for sites that change often.",
+      },
+      {
+        q: "Do you offer monthly plans?",
+        a: "Yes, two optional plans, each quoted after a short call. Care covers updates, fixes, security and speed and SEO check-ups. Grow adds ongoing SEO fixes, new pages or guides each month, AI search check-ups, Google Business Profile upkeep and a monthly search report. Neither plan promises rankings, because nobody controls Google's results, and everything made for you stays yours.",
+      },
+      {
+        q: "Can you do SEO on a website you didn't build?",
+        a: "Yes. Design Next offers one-off SEO audits, speed fixes, Google Business Profile setup and AI search readiness work on existing sites, each quoted before work begins, as well as the monthly Grow plan.",
+      },
+      {
+        q: "Can you fix a WordPress, Wix, Squarespace or Shopify website?",
+        a: "Yes. Design Next works across platforms, including WordPress, Wix, Squarespace and Shopify, as well as custom-coded sites. That covers fixes, updates and speed and SEO work on a site you already have, whoever built it.",
       },
       {
         q: "Where is my website hosted, and what does hosting cost?",

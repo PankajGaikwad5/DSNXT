@@ -22,6 +22,7 @@ export const metadata = pageMeta({
     "freelance web designer Mumbai",
     "freelance web developer India",
     "freelance Next.js developer",
+    "freelance Shopify developer",
     "hire freelance website developer",
   ],
 });

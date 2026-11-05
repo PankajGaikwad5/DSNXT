@@ -6,7 +6,7 @@ import Arrow from "./Arrow";
 import { WhatsAppIcon } from "./Icons";
 import { SITE } from "@/data/site";
 
-const NEEDS = ["New website", "Redesign", "Landing page", "Maintenance", "Something else"];
+const NEEDS = ["New website", "Redesign", "Shopify store", "Landing page", "SEO", "Monthly plan", "Something else"];
 const TIMING = ["As soon as possible", "Within 1 to 2 months", "Just exploring"];
 
 function Chips({ label, options, value, onChange }) {

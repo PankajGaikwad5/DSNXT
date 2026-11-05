@@ -77,7 +77,7 @@ export default function Home() {
         <SectionHead
           index="04"
           title={["What we do"]}
-          aside={<p className="max-w-xs opacity-60">Three disciplines, one desk, nothing outsourced.</p>}
+          aside={<p className="max-w-xs opacity-60">Four disciplines, one desk, nothing outsourced.</p>}
         />
         <ServiceList items={SERVICES} tone="light" />
        </div>

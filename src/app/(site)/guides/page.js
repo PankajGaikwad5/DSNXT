@@ -17,7 +17,9 @@ export const metadata = pageMeta({
 const fmt = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
 export default function GuidesPage() {
-  const guides = getGuides();
+  const all = getGuides();
+  const guides = all.filter((g) => g.type === "guide");
+  const answers = all.filter((g) => g.type === "answer");
   return (
     <div className="bg-paper text-ink">
       <JsonLd data={breadcrumbs([{ name: "Guides", path: "/guides" }])} />
@@ -55,6 +57,21 @@ export default function GuidesPage() {
             </li>
           ))}
         </ul>
+
+        {answers.length > 0 && (
+          <div className="mt-24 md:mt-32">
+            <h2 className="t-label mb-6 text-ink/50">Quick answers</h2>
+            <ul className="grid border-t border-ink/15 md:grid-cols-2 md:gap-x-12">
+              {answers.map((g) => (
+                <li key={g.slug} className="border-b border-ink/15">
+                  <Link href={`/guides/${g.slug}`} className="block py-4 transition-colors hover:text-signal">
+                    {g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       <CtaBand />

@@ -12,14 +12,19 @@ import { FAQS } from "@/data/faqs";
 import { JsonLd, breadcrumbs, faqPage, pageMeta, serviceSchema } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Web Design, Next.js Development & SEO Services",
+  title: "Web Design, Shopify & SEO Services",
   description:
-    "Custom website design, hand-coded Next.js development, SEO and website maintenance from one independent studio in Mumbai. Fixed quotes, a free homepage preview, launch in 7 to 10 days.",
+    "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from one independent studio in Mumbai, working worldwide. Fixed quotes and a free homepage preview.",
   path: "/services",
   keywords: [
     "web design services",
     "Next.js development services",
+    "custom Shopify store design",
+    "Shopify developer",
     "SEO services Mumbai",
+    "monthly SEO services",
+    "SEO audit",
+    "Google Business Profile setup",
     "website redesign services",
     "landing page design",
     "website maintenance services",
@@ -52,23 +57,50 @@ const TIERS = [
     name: "Bespoke",
     time: "2 to 3 weeks",
     for: "Media, collectible brands, international teams",
-    items: ["Everything in Studio", "CMS and custom integrations", "Audio, video & catalogue systems", "WebGL / 3D moments", "Priority support after launch"],
+    items: ["Everything in Studio", "Custom Shopify stores", "CMS and custom integrations", "Audio, video & catalogue systems", "WebGL / 3D moments", "Priority support after launch"],
   },
 ];
 
-const CARE = [
-  "Text, image & project updates",
-  "New pages and sections",
-  "Bug fixes & small changes",
-  "Security & dependency updates",
-  "Speed & SEO check-ups",
-  "Hosting & domain help",
+const MONTHLY = [
+  {
+    name: "Care",
+    for: "Keep your site current",
+    items: [
+      "Text, image & project updates",
+      "New pages and sections",
+      "Bug fixes & small changes",
+      "Security & dependency updates",
+      "Speed & SEO check-ups",
+      "Hosting & domain help",
+    ],
+  },
+  {
+    name: "Grow",
+    for: "Keep improving in search",
+    items: [
+      "Everything in Care",
+      "Ongoing SEO fixes",
+      "New pages or guides each month",
+      "AI search check-ups",
+      "Google Business Profile upkeep",
+      "A monthly search report",
+    ],
+  },
+];
+
+const ONE_OFF = [
+  "SEO audit",
+  "Speed & Core Web Vitals fixes",
+  "Google Business Profile setup",
+  "AI search readiness",
+  "Social media templates",
+  "Fixes on WordPress, Wix, Squarespace & Shopify",
 ];
 
 export default function ServicesPage() {
   return (
     <>
-      <JsonLd data={serviceSchema({ name: "Web design, development and SEO", description: "Custom website design, Next.js development and technical SEO from Design Next.", path: "/services", areas: ["Mumbai", "India", "Worldwide"] })} />
+      <JsonLd data={serviceSchema({ name: "Web design, Shopify and SEO", description: "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from Design Next.", path: "/services", areas: ["Mumbai", "India", "Worldwide"] })} />
       <JsonLd data={faqPage(FAQS)} />
       <JsonLd data={breadcrumbs([{ name: "Services", path: "/services" }])} />
       <InkHeader>
@@ -127,7 +159,7 @@ export default function ServicesPage() {
               <Lines as="h2" className="t-display" lines={["Fixed quotes.", <span key="t" className="serif">No surprises.</span>]} />
             </div>
             <p className="t-lead text-ink/65 md:col-span-4 md:col-start-9">
-              Every engagement starts with a free homepage preview. You get one clear price after our call, and it never
+              Every build starts with a free homepage preview. You get one clear price after our call, and it never
               grows.
             </p>
           </div>
@@ -165,25 +197,57 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          {/* Care: ongoing work after launch, priced apart from the build */}
+          {/* Monthly plans: ongoing work after launch, priced apart from the build */}
           <div id="maintenance" className="mt-4 grid scroll-mt-28 gap-10 rounded-[6px] border border-ink/15 p-7 md:grid-cols-12 md:p-9">
             <div className="md:col-span-5">
               <p className="t-label text-signal">After launch</p>
-              <h3 className="t-h3 mt-4">Care & maintenance</h3>
+              <h3 className="t-h3 mt-4">Monthly plans</h3>
               <p className="mt-4 text-ink/65">
-                Need a change every now and then? Updates, fixes and improvements to your site, whether we built it or
-                not. Charged separately from the build: quoted per request, or a simple monthly plan if your site changes
-                often.
+                Optional, and for any site, whether we built it or not. Each plan is quoted after a short call, charged
+                separately from the build, and everything we make stays yours. Only need a change now and then? We can quote
+                per request instead.
               </p>
               <Link
                 href="/contact"
                 className="group mt-8 inline-flex items-center gap-3 rounded-full bg-ink px-6 py-4 text-paper transition-colors hover:bg-signal"
               >
-                Ask about maintenance <Arrow />
+                Ask about monthly plans <Arrow />
+              </Link>
+            </div>
+            <div className="grid content-start gap-10 sm:grid-cols-2 sm:gap-8 md:col-span-6 md:col-start-7">
+              {MONTHLY.map((p) => (
+                <div key={p.name}>
+                  <h4 className="t-h3">{p.name}</h4>
+                  <p className="mt-2 text-ink/60">{p.for}</p>
+                  <ul className="mt-6 border-t border-ink/10">
+                    {p.items.map((it) => (
+                      <li key={it} className="border-b border-ink/10 py-3.5">
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* One-off jobs: smaller work that doesn't need a build or a plan */}
+          <div className="mt-4 grid gap-10 rounded-[6px] border border-ink/15 p-7 md:grid-cols-12 md:p-9">
+            <div className="md:col-span-5">
+              <p className="t-label text-signal">Smaller jobs</p>
+              <h3 className="t-h3 mt-4">One-off work</h3>
+              <p className="mt-4 text-ink/65">
+                Not ready for a new site? Start with one focused job on the site you already have, quoted before we begin.
+              </p>
+              <Link
+                href="/contact"
+                className="group mt-8 inline-flex items-center gap-3 rounded-full bg-ink px-6 py-4 text-paper transition-colors hover:bg-signal"
+              >
+                Ask for a quote <Arrow />
               </Link>
             </div>
             <ul className="grid content-start gap-x-8 border-t border-ink/10 sm:grid-cols-2 md:col-span-6 md:col-start-7">
-              {CARE.map((c) => (
+              {ONE_OFF.map((c) => (
                 <li key={c} className="border-b border-ink/10 py-3.5">
                   {c}
                 </li>

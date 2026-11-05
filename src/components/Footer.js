@@ -65,6 +65,7 @@ export default function Footer() {
                   { label: "Australia", href: "/web-design-australia" },
                   { label: "Working worldwide", href: "/web-design-worldwide" },
                   { label: "Website development", href: "/website-development-company" },
+                  { label: "Shopify developer", href: "/shopify-developer" },
                   { label: "FAQ", href: "/faq" },
                 ].map((l) => (
                   <li key={l.href}>

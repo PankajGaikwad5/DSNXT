@@ -14,6 +14,7 @@ const DIR = path.join(process.cwd(), "content", "guides");
  * date: 2026-10-24
  * updated: 2026-10-24        (optional)
  * keywords: web designer, hire web designer   (optional, comma-separated)
+ * type: answer               (optional; short how-tos, listed apart as "Quick answers")
  * ---
  *
  * Optional "## Questions" section: every "### question" under it becomes FAQ schema.
@@ -34,6 +35,7 @@ function parse(file) {
     date: meta.date || "",
     updated: meta.updated || meta.date || "",
     keywords: meta.keywords ? meta.keywords.split(",").map((k) => k.trim()) : [],
+    type: meta.type || "guide",
     body,
   };
 }

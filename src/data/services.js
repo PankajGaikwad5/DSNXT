@@ -2,25 +2,46 @@ import { MEDIA, unsplash } from "./site";
 
 export const SERVICES = [
   {
-    title: "Design",
-    text: "Art direction, identity touch-ups and interfaces drawn from scratch for your audience.",
-    tags: ["Art direction", "UI", "Motion"],
-    art: "design",
-    details: ["Positioning & sitemap", "Art direction", "Responsive UI design", "Motion & interaction"],
-  },
-  {
-    title: "Development",
-    text: "Hand-written Next.js that loads in a blink and scores 100 where it counts.",
+    title: "Websites",
+    text: "Designed from scratch and hand-written in Next.js. Loads in a blink and scores 100 where it counts.",
     tags: ["Next.js", "WebGL", "CMS"],
     art: "development",
-    details: ["Hand-coded Next.js", "Content management", "WebGL & 3D", "Hosting on the global edge"],
+    details: [
+      "Custom design & development",
+      "Redesigns & landing pages",
+      "Rebuilds from Wix, Squarespace & AI tools",
+      "Content management",
+      "Motion, WebGL & 3D",
+      "Hosting on the global edge",
+    ],
+  },
+  {
+    title: "Shopify stores",
+    text: "Custom storefronts with no off-the-shelf theme, or a catalogue and enquiry flow if your clients buy through a conversation.",
+    tags: ["Shopify", "Ecommerce", "Catalogues"],
+    image: "/work/cuddles.webp",
+    details: ["Store design & build", "Custom Shopify themes", "Catalogue & enquiry sites", "Payments & checkout setup"],
+  },
+  {
+    title: "Brand direction",
+    text: "Colour, type and image style that make your site unmistakably yours, with templates so your social posts match.",
+    tags: ["Art direction", "Type", "Templates"],
+    art: "design",
+    details: ["Positioning & sitemap", "Art direction", "Colour, type & image style", "Brand refresh for the web", "Social media templates"],
   },
   {
     title: "Search & growth",
-    text: "Structured for Google from day one, with enquiries routed straight to you.",
-    tags: ["SEO", "Analytics", "Leads"],
+    text: "Structured for Google and AI search from day one, then looked after every month if you want it.",
+    tags: ["SEO", "AI search", "Analytics"],
     art: "search",
-    details: ["Technical & local SEO", "Search Console setup", "WhatsApp & email lead routing", "Analytics"],
+    details: [
+      "Technical & local SEO",
+      "AI search readiness",
+      "SEO audits & speed fixes",
+      "Google Business Profile setup",
+      "Search Console & analytics",
+      "WhatsApp & email enquiry routing",
+    ],
   },
 ];
 
@@ -53,5 +74,5 @@ export const STATS = [
   { value: "0.3", unit: "s", label: "Average load time" },
   { value: "100", unit: "", label: "Lighthouse performance" },
   { value: "10", unit: "d", label: "Typical time to launch" },
-  { value: "₹0", unit: "", label: "Until you love it" },
+  { value: "Free", unit: "", label: "Until you love it" },
 ];

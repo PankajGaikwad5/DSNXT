@@ -14,6 +14,7 @@ const PAGES = [
   ["/web-design-usa", 0.8, "monthly"],
   ["/web-design-australia", 0.8, "monthly"],
   ["/website-development-company", 0.9, "monthly"],
+  ["/shopify-developer", 0.9, "monthly"],
   ["/about", 0.7, "monthly"],
   ["/founder", 0.7, "monthly"],
   ["/guides", 0.8, "weekly"],

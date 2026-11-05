@@ -36,7 +36,7 @@ export default async function GuidePage({ params }) {
   if (!g) notFound();
   const path = `/guides/${g.slug}`;
   const minutes = Math.max(1, Math.round(g.body.split(/\s+/).length / 220));
-  const more = getGuides().filter((x) => x.slug !== g.slug).slice(0, 3);
+  const more = getGuides().filter((x) => x.slug !== g.slug && x.type === "guide").slice(0, 3);
 
   return (
     <article className="bg-paper text-ink">
