@@ -44,6 +44,7 @@ Key facts:
 
 ## Quick answers
 - [Why is my contact form not sending emails?](https://www.designnext.co/guides/contact-form-not-sending-emails)
+- [Why does my website say "Not secure"?](https://www.designnext.co/guides/website-says-not-secure)
 
 ## Selected work
 - [Karan Desai Architecture](https://www.designnext.co/work/karan-desai): architecture, Mumbai & Goa

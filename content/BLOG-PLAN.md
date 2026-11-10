@@ -23,7 +23,7 @@ Keep this order: some drafts link to earlier ones, so publishing out of order cr
 
 | Done | Order | File |
 |---|---|---|
-| [ ] | 1 | `website-says-not-secure.md` |
+| [x] | 1 | `website-says-not-secure.md` |
 | [ ] | 2 | `website-is-down-what-to-do.md` |
 | [ ] | 3 | `get-business-on-google-maps.md` |
 | [ ] | 4 | `do-i-need-a-website-or-is-instagram-enough.md` |
@@ -72,7 +72,8 @@ Keep this order: some drafts link to earlier ones, so publishing out of order cr
 - Website for interior designers
 - Why your website isn't showing up on Google
 - How to choose a web designer
-- Why is my contact form not sending emails? (quick answer, goes out with the next commit)
+- Why is my contact form not sending emails? (quick answer)
+- Why does my website say "Not secure"? (quick answer, 2026-11-11)
 
 ## Don't write
 

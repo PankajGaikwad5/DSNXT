@@ -1,7 +1,7 @@
 ---
 title: Why does my website say "Not secure"?
 description: Browsers show "Not secure" when a site doesn't use a valid HTTPS connection. Here's what the warning means, why it appears and how to fix it, usually for free.
-date: 2026-11-05
+date: 2026-11-11
 type: answer
 keywords: website says not secure, not secure warning, website not secure fix, ssl certificate expired, how to get https, your connection is not private
 ---
