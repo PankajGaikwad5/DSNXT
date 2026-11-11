@@ -1,7 +1,7 @@
 ---
 title: "My website is down: what do I do?"
 description: If your website has stopped loading, work through these checks in order. Most outages come down to an expired domain, unpaid hosting, a bad update or a hosting failure.
-date: 2026-11-05
+date: 2026-11-11
 type: answer
 keywords: my website is down, website not loading, website not working what to do, website stopped working, domain expired website down, website offline
 ---

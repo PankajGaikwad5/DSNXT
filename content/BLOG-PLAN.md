@@ -24,7 +24,7 @@ Keep this order: some drafts link to earlier ones, so publishing out of order cr
 | Done | Order | File |
 |---|---|---|
 | [x] | 1 | `website-says-not-secure.md` |
-| [ ] | 2 | `website-is-down-what-to-do.md` |
+| [x] | 2 | `website-is-down-what-to-do.md` |
 | [ ] | 3 | `get-business-on-google-maps.md` |
 | [ ] | 4 | `do-i-need-a-website-or-is-instagram-enough.md` |
 | [ ] | 5 | `add-whatsapp-button-to-website.md` |
@@ -74,6 +74,7 @@ Keep this order: some drafts link to earlier ones, so publishing out of order cr
 - How to choose a web designer
 - Why is my contact form not sending emails? (quick answer)
 - Why does my website say "Not secure"? (quick answer, 2026-11-11)
+- My website is down: what do I do? (quick answer, 2026-11-11)
 
 ## Don't write
 

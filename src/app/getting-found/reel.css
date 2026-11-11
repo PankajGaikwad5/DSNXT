@@ -1,0 +1,137 @@
+/* A 9:16 reel frame in the studio's own palette and type: ink, paper, signal red;
+   Schibsted Grotesk with the Newsreader italic as the one red accent word. */
+.gf-page {
+  --ink: #0a0a0a;
+  --paper: #f3f0ea;
+  --paper-2: #e7e3db;
+  --mute: #8b8781;
+  --signal: #e4200f;
+
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #050505;
+  overflow: hidden;
+}
+
+.gf-stage {
+  position: relative;
+  height: min(100svh, 177.78vw);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: var(--ink);
+  container-type: size;
+}
+
+.gf-canvas,
+.gf-vignette,
+.gf-scrim {
+  position: absolute;
+  inset: 0;
+}
+
+.gf-vignette,
+.gf-scrim {
+  pointer-events: none;
+}
+
+/* keeps the caption band clean whatever passes behind it */
+.gf-scrim {
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.75) 22%, rgba(10, 10, 10, 0) 38%);
+}
+
+.gf-vignette {
+  background: radial-gradient(120% 80% at 50% 48%, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+/* ---- captions ---- */
+/* centred on the frame axis, just above the 3D, so the eye never leaves the middle */
+.gf-cap {
+  position: absolute;
+  top: 14cqh;
+  left: 6cqw;
+  right: 6cqw;
+  visibility: hidden;
+  text-align: center;
+  font-family: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 9.2cqw;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  color: var(--paper);
+}
+
+.gf-cap-end {
+  top: 17cqh;
+  font-size: 12cqw;
+  line-height: 1;
+}
+
+.gf-line {
+  display: block;
+  text-wrap: balance;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.gf-w {
+  margin-right: 0.24em;
+}
+
+.gf-w:last-child {
+  margin-right: 0;
+}
+
+.gf-em {
+  font-family: var(--font-newsreader), ui-serif, Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--signal);
+}
+
+.gf-end-brand {
+  position: absolute;
+  left: 7cqw;
+  right: 7cqw;
+  margin: 0;
+  text-align: center;
+  visibility: hidden;
+  bottom: 6cqh;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 3cqw;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* ---- outside the frame ---- */
+.gf-help {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+}
+
+.gf-help kbd {
+  padding: 2px 6px;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  font-family: inherit;
+  color: var(--paper);
+}
+
+@media (max-aspect-ratio: 10 / 16) {
+  .gf-help {
+    display: none;
+  }
+}
+
