@@ -2,7 +2,6 @@
 title: Do I need a website, or is Instagram enough?
 description: Instagram is great for attention, but you don't own it and it rarely shows up when people search for a business. Here's when Instagram is enough and when you need a website.
 date: 2026-11-05
-type: answer
 keywords: do i need a website, is instagram enough for my business, website vs instagram, do small businesses need a website, instagram instead of website, website or social media
 ---
 

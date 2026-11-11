@@ -2,7 +2,6 @@
 title: How do I add a WhatsApp button to my website?
 description: A WhatsApp button takes one link in the right format. Here's how to create it, add a pre-filled message, and place it where it actually gets people to message you.
 date: 2026-11-05
-type: answer
 keywords: add whatsapp button to website, whatsapp link for website, whatsapp chat button, wa.me link, click to chat whatsapp, whatsapp button website
 ---
 

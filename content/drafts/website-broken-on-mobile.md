@@ -2,7 +2,6 @@
 title: Why does my website look broken on mobile?
 description: Text that's too small, sideways scrolling and overlapping sections usually come from a layout that wasn't built for phones. Here's how to find the problem and when it's worth rebuilding.
 date: 2026-11-05
-type: answer
 keywords: website broken on mobile, website not mobile friendly, website looks bad on phone, website not responsive, fix mobile website, website too wide on mobile
 ---
 

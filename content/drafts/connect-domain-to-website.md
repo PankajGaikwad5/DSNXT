@@ -2,7 +2,6 @@
 title: How do I connect my domain to my website?
 description: Connecting a domain means pointing it at your website's host with DNS records or nameservers. Here's how it works, how long it takes and how to avoid breaking your email.
 date: 2026-11-05
-type: answer
 keywords: how to connect domain to website, connect domain to hosting, point domain to website, dns settings for website, domain not working, change nameservers
 ---
 

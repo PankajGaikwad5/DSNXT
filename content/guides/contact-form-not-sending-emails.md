@@ -2,7 +2,6 @@
 title: Why is my website contact form not sending emails?
 description: If enquiries from your website's contact form aren't arriving, the cause is usually spam filtering, a wrong address or a mail setup problem. Here's how to find which one and fix it.
 date: 2026-11-05
-type: answer
 keywords: contact form not sending emails, website form not working, not receiving emails from website, contact form emails going to spam, website enquiries not arriving
 ---
 
