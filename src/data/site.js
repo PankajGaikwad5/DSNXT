@@ -8,6 +8,9 @@ export const SITE = {
   whatsapp: "https://wa.me/919221968131",
   instagram: "https://www.instagram.com/designnext.co/",
   city: "Mumbai",
+  // Every public profile of the studio (LinkedIn, Clutch, Google Business Profile, Behance...).
+  // Listed as schema sameAs so AI engines link the profiles to one entity.
+  profiles: ["https://www.instagram.com/designnext.co/"],
 };
 
 export const NAV = [

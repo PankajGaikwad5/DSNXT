@@ -78,7 +78,7 @@ export function studioGraph() {
           "Websites for interior designers",
           "Portfolio websites for artists",
         ],
-        sameAs: [SITE.instagram],
+        sameAs: SITE.profiles,
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "sales",
