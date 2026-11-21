@@ -40,6 +40,7 @@ Key facts:
 - [Why is my contact form not sending emails?](https://www.designnext.co/guides/contact-form-not-sending-emails)
 - [Why does my website say "Not secure"?](https://www.designnext.co/guides/website-says-not-secure)
 - [My website is down: what do I do?](https://www.designnext.co/guides/website-is-down-what-to-do)
+- [How do I get my business on Google Maps?](https://www.designnext.co/guides/get-business-on-google-maps): free Google Business Profile setup, verification and ranking higher
 - [AI website builder vs a professional web designer](https://www.designnext.co/ai-website-builder-vs-web-designer): when to use each
 - [FAQ](https://www.designnext.co/faq): cost, timelines, SEO, ownership, AI builders
 - [Free homepage preview](https://www.designnext.co/preview): request a preview

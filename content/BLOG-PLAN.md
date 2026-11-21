@@ -24,7 +24,7 @@ Keep this order: some drafts link to earlier ones, so publishing out of order cr
 |---|---|---|
 | [x] | 1 | `website-says-not-secure.md` |
 | [x] | 2 | `website-is-down-what-to-do.md` |
-| [ ] | 3 | `get-business-on-google-maps.md` |
+| [x] | 3 | `get-business-on-google-maps.md` |
 | [ ] | 4 | `do-i-need-a-website-or-is-instagram-enough.md` |
 | [ ] | 5 | `add-whatsapp-button-to-website.md` |
 | [ ] | 6 | `website-broken-on-mobile.md` |

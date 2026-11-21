@@ -1,7 +1,7 @@
 ---
 title: How do I get my business on Google Maps?
 description: You get on Google Maps by creating a free Google Business Profile and verifying it. Here's how to set it up, what to do if you have no shopfront, and how to show up higher.
-date: 2026-11-05
+date: 2026-11-21
 keywords: how to get my business on google maps, add business to google maps, google business profile setup, business not showing on google maps, google maps listing
 ---
 
