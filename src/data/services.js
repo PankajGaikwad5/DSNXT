@@ -3,11 +3,12 @@ import { MEDIA, unsplash } from "./site";
 export const SERVICES = [
   {
     title: "Websites",
-    text: "Designed from scratch and hand-written in Next.js. Loads in a blink and scores 100 where it counts.",
+    text: "Custom website design and development, drawn from scratch and hand-written in Next.js. Loads in a blink and scores 100 where it counts.",
     tags: ["Next.js", "WebGL", "CMS"],
     art: "development",
     details: [
       "Custom design & development",
+      "UI/UX design",
       "Redesigns & landing pages",
       "Rebuilds from Wix, Squarespace & AI tools",
       "Content management",
@@ -17,7 +18,7 @@ export const SERVICES = [
   },
   {
     title: "Shopify stores",
-    text: "Custom storefronts with no off-the-shelf theme, or a catalogue and enquiry flow if your clients buy through a conversation.",
+    text: "Custom Shopify ecommerce stores with no off-the-shelf theme, or a catalogue and enquiry flow if your clients buy through a conversation.",
     tags: ["Shopify", "Ecommerce", "Catalogues"],
     image: "/work/cuddles.webp",
     details: ["Store design & build", "Custom Shopify themes", "Catalogue & enquiry sites", "Payments & checkout setup"],
@@ -25,7 +26,7 @@ export const SERVICES = [
   {
     title: "Brand direction",
     text: "Colour, type and image style that make your site unmistakably yours, with templates so your social posts match.",
-    tags: ["Art direction", "Type", "Templates"],
+    tags: ["Branding", "Art direction", "Type"],
     art: "design",
     details: ["Positioning & sitemap", "Art direction", "Colour, type & image style", "Brand refresh for the web", "Social media templates"],
   },

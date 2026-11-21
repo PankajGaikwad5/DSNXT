@@ -9,7 +9,7 @@ import { JsonLd, breadcrumbs, pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Web Design Guides for Business Owners",
   description:
-    "Straight answers on web design, website costs, SEO, AI website builders and hiring a web designer, from Design Next, a web design studio in Mumbai.",
+    "Straight answers on web design, website costs, SEO, AI website builders and hiring a web designer, from Design Next, an independent web design studio.",
   path: "/guides",
   keywords: ["web design guide", "website tips for small business", "how to hire a web designer", "website SEO guide"],
 });

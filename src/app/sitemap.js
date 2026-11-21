@@ -2,14 +2,14 @@ import { PROJECTS } from "@/data/projects";
 import { SITE } from "@/data/site";
 import { getGuides } from "@/lib/guides";
 
-const UPDATED = "2026-10-24";
+const UPDATED = "2026-11-21";
 
 const PAGES = [
   ["", 1, "weekly"],
   ["/work", 0.9, "monthly"],
   ["/services", 0.9, "monthly"],
-  ["/web-design-mumbai", 0.9, "monthly"],
-  ["/web-design-worldwide", 0.8, "monthly"],
+  ["/web-design-mumbai", 0.6, "monthly"],
+  ["/web-design-worldwide", 0.9, "monthly"],
   ["/web-design-dubai-qatar", 0.8, "monthly"],
   ["/web-design-usa", 0.8, "monthly"],
   ["/web-design-australia", 0.8, "monthly"],

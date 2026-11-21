@@ -16,6 +16,14 @@ export const FAQS = [
     a: "Completely. The code, the domain and the content are yours. There are no page-builder subscriptions and no lock-in.",
   },
   {
+    q: "Can I hire you from the UK, US, the Gulf or Australia?",
+    a: "Yes. We work fully remotely with businesses worldwide. Calls happen in your working hours, you review everything on a live preview link, and you see your free homepage preview before you pay anything.",
+  },
+  {
+    q: "Are you a web design agency or a freelancer?",
+    a: "A bit of both. Design Next is a small web design agency led by designer-developer Pankaj Gaikwad, who designs and builds every site. You get an agency's process with a freelancer's directness: no account managers and no hand-offs.",
+  },
+  {
     q: "I get work through referrals. Do I still need this?",
     a: "Referrals look you up before they call. A great site turns that search into a booked meeting instead of a quiet second thought.",
   },
@@ -29,11 +37,19 @@ export const FAQ_GROUPS = [
       ...FAQS,
       {
         q: "What does Design Next do?",
-        a: "Design Next is an independent web design and development studio based in Mumbai, India. It designs and hand-codes custom websites in Next.js and custom Shopify stores for architects, interior designers, artists, creators and premium brands. It also offers brand direction for the web, SEO, hosting setup and launch, and monthly plans for ongoing care and search work.",
+        a: "Design Next is an independent web design and development studio that works with businesses worldwide. It designs and hand-codes custom websites in Next.js and custom Shopify stores for architects, interior designers, artists, creators and premium brands. It also offers brand direction for the web, SEO, hosting setup and launch, and monthly plans for ongoing care and search work.",
       },
       {
-        q: "Do you work with clients outside Mumbai and India?",
-        a: "Yes. Design Next works remotely with clients across India and internationally, including Qatar, the UAE and the wider Middle East, Australia, the UK and the US. Calls, previews and handover all happen online, so location makes no difference to the result.",
+        q: "Can I hire Design Next from outside India?",
+        a: "Yes. Design Next works fully remotely and takes on projects from the UK, the US, Qatar, the UAE and the wider Middle East, Australia, India and anywhere else. Calls happen during your working hours, and previews and handover all happen online, so location makes no difference to the result.",
+      },
+      {
+        q: "Do you design websites for small businesses?",
+        a: "Yes. Most Design Next clients are small businesses and independent practices: architecture and interior studios, artists, a collectible furniture brand, a podcast, a baby clothing store and an animal welfare hospital. Sites range from a one or two page website for a solo practice to a full multi-page site or Shopify store.",
+      },
+      {
+        q: "Can you build an ecommerce website or online store?",
+        a: "Yes. Design Next builds custom Shopify stores, from new stores to custom themes on an existing one, including payments and checkout setup. If your clients buy through a conversation rather than a cart, we can build a catalogue with an enquiry flow instead.",
       },
       {
         q: "How much does a custom website cost?",

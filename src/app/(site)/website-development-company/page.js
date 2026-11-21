@@ -3,17 +3,17 @@ import { AREAS, pageMeta } from "@/lib/seo";
 
 const PATH = "/website-development-company";
 const DESCRIPTION =
-  "Design Next is a website design and development company in Mumbai, India. Custom websites, Next.js development, Shopify stores and SEO for businesses in India and worldwide, with a free homepage preview before you pay.";
+  "Design Next is a website design and development company working with businesses worldwide. Custom websites, Next.js development, Shopify stores and SEO for businesses in the UK, US, the Gulf, Australia and India, with a free homepage preview before you pay.";
 
 export const metadata = pageMeta({
-  title: "Website Design & Development Company in India",
+  title: "Website Design & Development Company",
   description: DESCRIPTION,
   path: PATH,
   keywords: [
     "website development company",
     "website development company in India",
     "web design agency",
-    "web development agency Mumbai",
+    "web development agency",
     "website developer",
     "website designer",
     "custom website development",
@@ -52,7 +52,7 @@ export default function CompanyPage() {
       crumb="Website development company"
       label="Website design & development"
       title={["Websites,", <span key="c">designed and <span className="serif text-signal">built.</span></span>]}
-      lead="Design Next is a website design and development company in Mumbai. We plan, design, code and launch custom websites that load fast, rank well and win clients, for businesses in India and around the world."
+      lead="Design Next is a website design and development company working worldwide. We plan, design, code and launch custom websites that load fast, rank well and win clients, wherever your business is."
       service={{ name: "Website design and development", description: DESCRIPTION }}
       reasons={[
         ["Custom, never templated", "Every site starts on a blank page, designed around your business and the clients you want."],
@@ -69,7 +69,7 @@ export default function CompanyPage() {
       ]}
       projectSlugs={["cuddles-by-mia-co", "jivamaitridham"]}
       areasTitle="Serving clients in"
-      areas={["Mumbai", "Pune", "Bengaluru", "Delhi NCR", ...AREAS.world]}
+      areas={[...AREAS.world, "India"]}
       faqs={FAQS}
     />
   );

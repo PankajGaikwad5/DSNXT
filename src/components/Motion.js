@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { useInView, useScrollProgress, mix } from "@/lib/scroll";
 
 export function Reveal({ children, delay = 0, y = 40, className = "", as = "div" }) {
@@ -25,15 +25,19 @@ export function Lines({ lines, className, delay = 0, as = "div" }) {
   const Tag = as;
   return (
     <Tag ref={ref} className={className}>
+      {/* The space between lines keeps words separate for crawlers and screen readers ("make you", not "makeyou"). */}
       {lines.map((line, i) => (
-        <span key={i} className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
-          <span
-            className={`line-up block ${inView ? "is-in" : ""}`}
-            style={{ transitionDelay: `${delay + i * 0.09}s` }}
-          >
-            {line}
+        <Fragment key={i}>
+          {i > 0 && " "}
+          <span className="block overflow-hidden pb-[0.08em] -mb-[0.08em]">
+            <span
+              className={`line-up block ${inView ? "is-in" : ""}`}
+              style={{ transitionDelay: `${delay + i * 0.09}s` }}
+            >
+              {line}
+            </span>
           </span>
-        </span>
+        </Fragment>
       ))}
     </Tag>
   );

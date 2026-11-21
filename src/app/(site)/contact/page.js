@@ -24,8 +24,8 @@ function Row({ Icon, label, action, children }) {
 }
 
 export const metadata = pageMeta({
-  title: "Contact a Web Design Studio in Mumbai",
-  description: "Start a website project with Design Next in Mumbai. Tell us what you need and get a reply within one working day.",
+  title: "Contact Design Next: Start a Website Project",
+  description: "Start a website, Shopify or SEO project with Design Next, wherever you are. Tell us what you need and get a reply within one working day.",
   path: "/contact",
 });
 

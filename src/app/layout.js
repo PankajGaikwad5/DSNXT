@@ -28,9 +28,9 @@ const mono = Geist_Mono({
   preload: false,
 });
 
-const TITLE = "Design Next | Web Design & Development Studio in Mumbai";
+const TITLE = "Design Next | Custom Web Design & Shopify Studio, Worldwide";
 const DESCRIPTION =
-  "Custom website design and Next.js development from Mumbai. Design Next builds fast, distinctive, SEO-ready websites for architects, interior designers, artists and premium brands in India and worldwide. See your homepage free before you pay.";
+  "Design Next is an independent custom web design studio: websites, Shopify stores, brand direction and SEO for brands and small businesses in the UK, US, the Gulf, Australia and India. Hire us from anywhere and see your new homepage free before you pay.";
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -42,12 +42,24 @@ export const metadata = {
   publisher: SITE.name,
   category: "Web design and development",
   keywords: [
-    "web design company in Mumbai",
-    "website design agency Mumbai",
-    "website development company Mumbai",
-    "custom website design India",
+    "web design studio",
+    "custom web design agency",
+    "custom web design services",
+    "hire a web design agency",
+    "best web design agency for small business",
+    "website design for small businesses",
+    "brand and website design",
+    "creative studio",
+    "UI/UX design agency",
+    "ecommerce website design",
+    "hire a Shopify expert",
+    "Shopify designer",
+    "custom website design",
     "Next.js development agency",
-    "Next.js developer Mumbai",
+    "Shopify developer",
+    "web design UK",
+    "web design USA",
+    "web design Australia",
     "luxury website design",
     "website design for architects",
     "website design for interior designers",
@@ -57,7 +69,6 @@ export const metadata = {
     "AI website builder alternative",
     "Wix alternative custom website",
     "hire web designer",
-    "freelance web developer Mumbai",
     "website development company India",
     "web design Qatar",
     "web design Dubai",
@@ -79,12 +90,6 @@ export const metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   verification: { google: "_XiToG1usLWtgAx8lTgOiZclAnZxWPwfeYOjk_yLsNM" },
-  other: {
-    "geo.region": "IN-MH",
-    "geo.placename": "Mumbai",
-    "geo.position": "19.0760;72.8777",
-    ICBM: "19.0760, 72.8777",
-  },
 };
 
 export const viewport = {

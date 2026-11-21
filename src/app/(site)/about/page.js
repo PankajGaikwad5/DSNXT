@@ -40,7 +40,7 @@ export default function AboutPage() {
         <div className="md:col-span-9">
           <ScrollWords
             className="t-h2"
-            text="Design Next is a deliberately small studio, led by designer-developer Pankaj Gaikwad. We take on a few projects at a time so every one gets *senior hands from first sketch to launch day."
+            text="Design Next is a deliberately small web design and development studio, led by designer-developer Pankaj Gaikwad. We take on a few projects at a time so every one gets *senior hands from first sketch to launch day."
           />
           <Link href="/founder" className="group mt-12 inline-flex items-center gap-3 text-paper">
             <span className="u-link">Meet the founder</span>

@@ -10,9 +10,9 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Our Work: Custom Websites for Architects, Artists & Brands",
   description:
-    "Selected websites designed and hand-coded by Design Next in Mumbai: architecture and interior studios, collectible design, fine art, podcasts and non-profits.",
+    "Selected websites designed and hand-coded by Design Next for clients in India, Australia and the Middle East: architecture and interior studios, collectible design, fine art, podcasts and non-profits.",
   path: "/work",
-  keywords: ["web design portfolio Mumbai", "website design examples", "architect website design", "artist portfolio website"],
+  keywords: ["web design portfolio", "website design examples", "architect website design", "artist portfolio website"],
 });
 
 // Rhythm from width and offset; every tile keeps the screenshots' own ratio so images fill uncropped.

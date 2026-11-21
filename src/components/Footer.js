@@ -59,11 +59,11 @@ export default function Footer() {
               <p className="t-label mb-5 text-dim">Guides</p>
               <ul className="space-y-2.5">
                 {[
-                  { label: "Web design in Mumbai", href: "/web-design-mumbai" },
-                  { label: "Dubai, Qatar & Gulf", href: "/web-design-dubai-qatar" },
-                  { label: "United States", href: "/web-design-usa" },
-                  { label: "Australia", href: "/web-design-australia" },
                   { label: "Working worldwide", href: "/web-design-worldwide" },
+                  { label: "United States", href: "/web-design-usa" },
+                  { label: "Dubai, Qatar & Gulf", href: "/web-design-dubai-qatar" },
+                  { label: "Australia", href: "/web-design-australia" },
+                  { label: "India", href: "/web-design-mumbai" },
                   { label: "Website development", href: "/website-development-company" },
                   { label: "Shopify developer", href: "/shopify-developer" },
                   { label: "FAQ", href: "/faq" },

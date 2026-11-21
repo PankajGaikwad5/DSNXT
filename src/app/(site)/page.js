@@ -47,7 +47,10 @@ export default function Home() {
             <span className="u-link">Get in touch</span>
             <Arrow />
           </Link>
-          <span className="opacity-60">Designed and built, start to finish. Mumbai, working worldwide.</span>
+          <span className="max-w-xl opacity-60">
+            An independent web design agency for brands and small businesses: custom website design and development,
+            Shopify ecommerce stores, branding and SEO, designed and built start to finish for clients worldwide.
+          </span>
         </Reveal>
        </div>
       </section>
@@ -77,7 +80,7 @@ export default function Home() {
         <SectionHead
           index="04"
           title={["What we do"]}
-          aside={<p className="max-w-xs opacity-60">Four disciplines, one desk, nothing outsourced.</p>}
+          aside={<p className="max-w-xs opacity-60">Website design, Shopify stores, branding and SEO. Four disciplines, one desk, nothing outsourced.</p>}
         />
         <ServiceList items={SERVICES} tone="light" />
        </div>

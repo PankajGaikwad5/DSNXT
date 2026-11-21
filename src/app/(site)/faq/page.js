@@ -27,7 +27,7 @@ export default function FaqPage() {
         <Reveal delay={0.3} className="mt-12 max-w-xl">
           <p className="t-lead text-ink/70">
             Everything people usually ask before starting a website with Design Next, a web design and development studio
-            in Mumbai.
+            working with clients worldwide.
           </p>
         </Reveal>
       </InkHeader>

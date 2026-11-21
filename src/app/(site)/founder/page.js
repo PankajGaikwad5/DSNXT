@@ -13,13 +13,12 @@ const FACTS = [
 ];
 
 export const metadata = pageMeta({
-  title: "Pankaj Gaikwad, Freelance Web Designer & Developer in Mumbai",
+  title: "Pankaj Gaikwad, Founder of Design Next",
   description:
-    "Pankaj Gaikwad is the freelance web designer and Next.js developer behind Design Next in Mumbai. Work directly with the person who designs and codes your website, for clients in India and worldwide.",
+    "Pankaj Gaikwad is the founder of Design Next and the designer-developer behind every site it builds. Work directly with the person who designs and codes your website, wherever your business is.",
   path: "/founder",
   keywords: [
     "Pankaj Gaikwad",
-    "freelance web designer Mumbai",
     "freelance web developer India",
     "freelance Next.js developer",
     "freelance Shopify developer",
@@ -48,9 +47,9 @@ export default function FounderPage() {
         />
         <Reveal delay={0.3} className="mt-12 max-w-xl">
           <p className="t-lead text-ink/70">
-            I&apos;m Pankaj Gaikwad, the web designer and developer behind Design Next in Mumbai. You get the directness of
+            I&apos;m Pankaj Gaikwad, the founder of Design Next and the designer-developer behind every site we build. You get the directness of
             hiring a freelancer with the process of a studio: you work with me, from the first call to launch day, whether
-            you&apos;re in Mumbai, Doha or London.
+            you&apos;re in London, Doha or Sydney.
           </p>
         </Reveal>
       </InkHeader>

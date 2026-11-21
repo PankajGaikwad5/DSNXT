@@ -2,7 +2,7 @@
 title: Why your website isn't showing up on Google (and how to fix it)
 description: Your website is live but nobody can find it on Google. Here are the 10 real reasons it happens, a 5-minute test to find yours, and the fixes, explained for business owners rather than developers.
 date: 2026-10-29
-keywords: website not showing on google, why is my website not on google, website not indexed, how to get my website on google, google search console, local seo Mumbai, website not ranking
+keywords: website not showing on google, why is my website not on google, website not indexed, how to get my website on google, google search console, local seo, website not ranking
 ---
 
 **The short answer:** if your website doesn't appear on Google at all, Google either hasn't found it, has been told not to show it, or doesn't think it's worth showing yet. Each of those has a different fix, and you can work out which one is yours in about five minutes, with no technical skills.
@@ -75,7 +75,7 @@ If the `site:` search shows your pages, Google has them. Now the question is why
 
 ### 7. You're not targeting what people actually type
 
-Your homepage might say *"Crafting spaces that inspire"*. Your customers are searching *"interior designer in Bandra"*. Google matches pages to searches, and a page that never mentions what you do and where you do it is hard to match to anything.
+Your homepage might say *"Crafting spaces that inspire"*. Your customers are searching *"interior designer in Chelsea"*. Google matches pages to searches, and a page that never mentions what you do and where you do it is hard to match to anything.
 
 **Fix:** every important page needs one clear subject, stated plainly in its title, its main heading and its first paragraph: the service, and the city if you serve locally. Write the way your customers speak, not the way your brochure does.
 
@@ -87,7 +87,7 @@ Google ranks the mobile version of your site, and it measures real visitors' exp
 
 ### 9. No Google Business Profile (for local businesses)
 
-For searches like *"architect near me"* or *"web designer Mumbai"*, Google shows a map with three businesses before any website results. Those come from **Google Business Profile**, not from your website. Without one, you're missing the most visible spot on the page.
+For searches like *"architect near me"* or *"dentist in Manchester"*, Google shows a map with three businesses before any website results. Those come from **Google Business Profile**, not from your website. Without one, you're missing the most visible spot on the page.
 
 **Fix:** claim your free profile, choose the right category, add real photos, and ask happy clients for reviews. Link it to your website and make sure your name, address and phone number match exactly on both.
 
@@ -99,7 +99,7 @@ Google trusts sites that other trusted sites talk about. A new business website 
 
 ## The new problem: AI search can't find you either
 
-In 2026 a growing share of people don't scroll through Google results. They ask Google's AI Overviews, ChatGPT or Perplexity *"who's a good interior designer in Mumbai?"* and act on the answer.
+In 2026 a growing share of people don't scroll through Google results. They ask Google's AI Overviews, ChatGPT or Perplexity *"who's a good interior designer in Dubai?"* and act on the answer.
 
 These tools favour the same things Google does, with a few extras:
 
@@ -131,7 +131,7 @@ Usually between a few days and a few weeks. Submitting a sitemap and requesting 
 
 ### Why does my website show up when I search the business name but not my services?
 
-Being indexed and ranking are different things. Google knows your site exists, but for searches like "interior designer in Mumbai" it shows pages it considers more relevant or trusted. Make sure each service has its own page that clearly names the service and location, improve page speed, set up a Google Business Profile and earn a few genuine links from relevant sites.
+Being indexed and ranking are different things. Google knows your site exists, but for searches like "interior designer in London" it shows pages it considers more relevant or trusted. Make sure each service has its own page that clearly names the service and location, improve page speed, set up a Google Business Profile and earn a few genuine links from relevant sites.
 
 ### Do I need to pay Google to appear in search results?
 
@@ -147,4 +147,4 @@ Yes, such sites can rank, but they are often slower and give you less control ov
 
 ### Can you fix a website that someone else built?
 
-Yes. Design Next reviews and fixes search problems on sites built elsewhere, from indexing errors and slow pages to missing structured data, and works with clients in Mumbai, across India and internationally.
+Yes. Design Next reviews and fixes search problems on sites built elsewhere, from indexing errors and slow pages to missing structured data, and works with clients worldwide.

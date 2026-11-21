@@ -37,7 +37,7 @@ export function studioGraph() {
         telephone: SITE.tel,
         founder: { "@id": PERSON_ID },
         description:
-          "Design Next is an independent web design and development studio in Mumbai, India, led by designer-developer Pankaj Gaikwad. It designs and hand-codes fast, custom websites in Next.js and Shopify for architects, interior designers, artists and premium brands in Mumbai, across India and internationally, including Qatar, the UAE, the UK and Australia, and shows every client a free working homepage preview before they pay.",
+          "Design Next is an independent web design and development studio led by designer-developer Pankaj Gaikwad. It designs and hand-codes fast, custom websites in Next.js, custom Shopify stores, brand direction and SEO for businesses worldwide, including the UK, the US, Qatar, the UAE, Saudi Arabia, Australia and India. It works fully remotely and shows every client a free working homepage preview before they pay.",
         slogan: "Websites that make you the obvious choice.",
         foundingLocation: { "@type": "Place", name: "Mumbai, India" },
         address: {
@@ -46,11 +46,10 @@ export function studioGraph() {
           addressRegion: "Maharashtra",
           addressCountry: "IN",
         },
-        geo: { "@type": "GeoCoordinates", latitude: 19.076, longitude: 72.8777 },
         areaServed: [
-          ...AREAS.mumbai.map((name) => ({ "@type": "City", name })),
-          { "@type": "Country", name: "India" },
+          { "@type": "Place", name: "Worldwide" },
           ...AREAS.world.map((name) => ({ "@type": "Country", name })),
+          { "@type": "Country", name: "India" },
         ],
         knowsAbout: [
           "Web design",
@@ -65,6 +64,9 @@ export function studioGraph() {
           "WordPress, Wix and Squarespace fixes",
           "React",
           "UI/UX design",
+          "Brand and website design",
+          "Ecommerce website design",
+          "Website design for small businesses",
           "Website redesign",
           "Landing page design",
           "Technical SEO",
@@ -116,6 +118,7 @@ export function studioGraph() {
         name: "Pankaj Gaikwad",
         jobTitle: "Founder, web designer and developer",
         url: `${SITE.url}/founder`,
+        sameAs: ["https://www.pankajgaikwad.online/"],
         worksFor: { "@id": ORG_ID },
         homeLocation: { "@type": "Place", name: "Mumbai, India" },
         knowsAbout: ["Web design", "Next.js", "React", "Shopify", "Shopify development", "Custom Shopify themes", "WebGL", "Technical SEO"],
@@ -172,7 +175,7 @@ export function serviceSchema({ name, description, path, areas }) {
 
 /** Shared metadata shape for a page: canonical, OG and Twitter all in step. */
 // A page's own openGraph replaces the root one, which drops the site-wide share card, so name it explicitly.
-const SHARE_IMAGE = { url: `${SITE.url}/opengraph-image`, width: 1200, height: 630, alt: "Design Next, web design studio in Mumbai" };
+const SHARE_IMAGE = { url: `${SITE.url}/opengraph-image`, width: 1200, height: 630, alt: "Design Next, web design and development studio" };
 
 export function pageMeta({ title, description, path, keywords = [], image = SHARE_IMAGE }) {
   const url = `${SITE.url}${path}`;

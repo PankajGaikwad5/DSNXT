@@ -14,14 +14,14 @@ import { JsonLd, breadcrumbs, faqPage, pageMeta, serviceSchema } from "@/lib/seo
 export const metadata = pageMeta({
   title: "Web Design, Shopify & SEO Services",
   description:
-    "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from one independent studio in Mumbai, working worldwide. Fixed quotes and a free homepage preview.",
+    "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from one independent studio, for businesses worldwide. Fixed quotes and a free homepage preview.",
   path: "/services",
   keywords: [
     "web design services",
     "Next.js development services",
     "custom Shopify store design",
     "Shopify developer",
-    "SEO services Mumbai",
+    "SEO services for small businesses",
     "monthly SEO services",
     "SEO audit",
     "Google Business Profile setup",
@@ -100,11 +100,11 @@ const ONE_OFF = [
 export default function ServicesPage() {
   return (
     <>
-      <JsonLd data={serviceSchema({ name: "Web design, Shopify and SEO", description: "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from Design Next.", path: "/services", areas: ["Mumbai", "India", "Worldwide"] })} />
+      <JsonLd data={serviceSchema({ name: "Web design, Shopify and SEO", description: "Custom websites, Shopify stores, brand direction, SEO and monthly care plans from Design Next.", path: "/services", areas: ["Worldwide", "United Kingdom", "United States", "Middle East", "Australia", "India"] })} />
       <JsonLd data={faqPage(FAQS)} />
       <JsonLd data={breadcrumbs([{ name: "Services", path: "/services" }])} />
       <InkHeader>
-        <p className="t-label mb-8 text-ink/60">Services</p>
+        <p className="t-label mb-8 text-ink/60">Website design services</p>
         <Lines
           as="h1"
           className="t-mega max-w-[12ch]"
@@ -112,8 +112,9 @@ export default function ServicesPage() {
         />
         <Reveal delay={0.3} className="mt-12 max-w-xl">
           <p className="t-lead text-ink/70">
-            The person who designs your site is the person who builds it. Nothing gets lost between a designer, a developer
-            and an SEO agency, and you always talk to the one doing the work.
+            Website design and development, Shopify ecommerce, branding and SEO from one web design studio. The person who
+            designs your site is the person who builds it, so nothing gets lost between a designer, a developer and an SEO
+            agency, and you always talk to the one doing the work.
           </p>
         </Reveal>
       </InkHeader>
